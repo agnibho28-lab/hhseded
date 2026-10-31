@@ -1,0 +1,450 @@
+{
+  "questions": [
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle \\theta\\in\\left[0,\\frac{\\pi}{2}\\right]\\)<span></span> and let <span></span>\\(\\displaystyle z_1=e^{-i\\theta},\\ z_2=1,\\ z_3=e^{i\\theta}\\)<span></span>. Define <span></span>\\(\\displaystyle S(\\theta)=z_1\\bar{z_2}+z_2\\bar{z_3}+z_3\\bar{z_1}\\)<span></span> and <span></span>\\(\\displaystyle T(\\theta)=z_1+z_2+z_3\\)<span></span>. For <span></span>\\(\\displaystyle n\\ge1\\)<span></span> let <span></span>\\(\\displaystyle a_n=\\int_0^{\\pi/2}\\left(\\frac{|T(\\theta)|^2}{|S(\\theta)|^2}\\right)^{n}d\\theta\\)<span></span>. Then <span></span>\\(\\displaystyle \\lim_{n\\to\\infty}\\frac{a_{n+1}}{a_n}\\)<span></span> equals:",
+      "options": [
+        "<span></span>\\(\\displaystyle \\frac{4+2\\sqrt[3]{3}+3\\sqrt[3]{9}}{3}\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\frac{5+3\\sqrt[3]{3}+2\\sqrt[3]{9}}{3}\\)<span></span><span></span>",
+        "<span></span>\\(\\displaystyle \\frac{4+3\\sqrt[3]{3}+2\\sqrt[3]{9}}{3}\\)<span></span><span></span>",
+        "<span></span>\\(\\displaystyle \\frac{4+3\\sqrt[3]{3}+2\\sqrt[3]{9}}{4}\\)<span></span><span></span>"
+      ],
+      "answer": 2,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 1
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle z\\)<span></span> be a complex number with <span></span>\\(\\displaystyle |z|=1\\)<span></span> and <span></span>\\(\\displaystyle k\\in\\mathbb{R}\\)<span></span>, such that <span></span>\\(\\displaystyle \\frac{6-k^2+k^2z}{k+\\bar{z}}=kz\\)<span></span>. Let <span></span>\\(\\displaystyle P\\)<span></span> be the point with position vector <span></span>\\(\\displaystyle \\vec{p}=k\\,\\hat{e}_1+k^2\\,\\hat{e}_2+(k^2+k)\\,\\hat{e}_3\\)<span></span>. Let <span></span>\\(\\displaystyle \\Pi\\)<span></span> be the plane through <span></span>\\(\\displaystyle (1,2,0)\\)<span></span> which contains the directions <span></span>\\(\\displaystyle \\vec{u}=\\hat{e}_1+2\\hat{e}_2\\)<span></span> and <span></span>\\(\\displaystyle \\vec{v}=2\\hat{e}_2+\\hat{e}_3\\)<span></span>. Let <span></span>\\(\\displaystyle \\Gamma\\)<span></span> be the circle in which <span></span>\\(\\displaystyle \\Pi\\)<span></span> meets the sphere <span></span>\\(\\displaystyle x^2+y^2+z^2-6x-2y-4z+4=0\\)<span></span>. If <span></span>\\(\\displaystyle M\\)<span></span> is the greatest distance from <span></span>\\(\\displaystyle P\\)<span></span> to a point of <span></span>\\(\\displaystyle \\Gamma\\)<span></span>, taken over all admissible values of <span></span>\\(\\displaystyle k\\)<span></span>, then <span></span>\\(\\displaystyle M^2\\)<span></span> equals:",
+      "options": [
+        "<span></span>\\(\\displaystyle 52\\)<span></span>",
+        "<span></span>\\(\\displaystyle 130\\)<span></span>",
+        "<span></span>\\(\\displaystyle 174\\)<span></span>",
+        "<span></span>\\(\\displaystyle 122\\)<span></span>"
+      ],
+      "answer": 3,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 2
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle \\alpha,\\beta\\)<span></span> be the roots of <span></span>\\(\\displaystyle 2z^2-3z-2i=0\\)<span></span>, where <span></span>\\(\\displaystyle i=\\sqrt{-1}\\)<span></span>. For a positive integer <span></span>\\(\\displaystyle k\\)<span></span>, define the set <span></span>\\(\\displaystyle A_k=\\left\\{\\frac{\\alpha^{n+k}+\\beta^{n+k}+\\alpha^{n-k}+\\beta^{n-k}}{\\alpha^{n}+\\beta^{n}}:n\\in\\mathbb{N}\\right\\}\\)<span></span>. Let <span></span>\\(\\displaystyle w\\)<span></span> be the unique element of <span></span>\\(\\displaystyle A_4\\)<span></span>, let <span></span>\\(\\displaystyle K=\\{k\\in\\mathbb{N}:1\\le k\\le 40,\\ n(A_k)=1\\}\\)<span></span>, and let <span></span>\\(\\displaystyle L=\\{k\\in\\mathbb{N}:k\\text{ is not divisible by }3\\}\\)<span></span>. Then <span></span>\\(\\displaystyle 16\\cdot\\mathrm{Re}(w)\\cdot\\mathrm{Im}(w)+n(K\\cap L)\\)<span></span> is equal to:",
+      "options": [
+        "<span></span>\\(\\displaystyle 441\\)<span></span>",
+        "<span></span>\\(\\displaystyle 451\\)<span></span>",
+        "<span></span>\\(\\displaystyle 448\\)<span></span>",
+        "<span></span>\\(\\displaystyle 455\\)<span></span>"
+      ],
+      "answer": 2,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 3
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle R=\\{(a,b):a,b\\in\\mathbb{N},\\ ab=1080,\\ \\gcd(a,b)=6\\}\\)<span></span> have <span></span>\\(\\displaystyle m\\)<span></span> elements, and let <span></span>\\(\\displaystyle \\sum_{n=1}^{m}\\left(1-i^{n!}\\right)=x+iy\\)<span></span>, where <span></span>\\(\\displaystyle i=\\sqrt{-1}\\)<span></span>. Let <span></span>\\(\\displaystyle V\\)<span></span> be the set of all distinct values of <span></span>\\(\\displaystyle 1-i^{n!}\\)<span></span> for <span></span>\\(\\displaystyle 1\\le n\\le m\\)<span></span>, and let <span></span>\\(\\displaystyle \\Gamma\\)<span></span> be the circle in the Argand plane passing through all points of <span></span>\\(\\displaystyle V\\)<span></span>. Let <span></span>\\(\\displaystyle p=x+iy\\)<span></span> and <span></span>\\(\\displaystyle q=x+(m-1)i\\)<span></span>. If <span></span>\\(\\displaystyle M\\)<span></span> and <span></span>\\(\\displaystyle \\mu\\)<span></span> are the greatest and least values of <span></span>\\(\\displaystyle |z-p|^2+|z-q|^2\\)<span></span> as <span></span>\\(\\displaystyle z\\)<span></span> moves on <span></span>\\(\\displaystyle \\Gamma\\)<span></span>, then <span></span>\\(\\displaystyle M+\\mu\\)<span></span> is equal to:",
+      "options": [
+        "<span></span>\\(\\displaystyle 168\\)<span></span>",
+        "<span></span>\\(\\displaystyle 104\\)<span></span>",
+        "<span></span>\\(\\displaystyle 200\\)<span></span>",
+        "<span></span>\\(\\displaystyle 136\\)<span></span>"
+      ],
+      "answer": 0,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 4
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\alpha\\)<span></span> and <span></span>\\(\\beta\\)<span></span> be the sum and the product of all the non-zero solutions of the equation <span></span>\\(\\displaystyle(\\bar{z})^2 + |z| = 0,\\ z \\in \\mathbb{C}\\)<span>, respectively</span>. Let <span></span>\\(y = y(x)\\)<span></span>, for <span></span>\\(\\displaystyle 0 &lt; x &lt; \\sqrt[3]{2}\\)<span></span>, be the solution of the differential equation <span></span>\\(\\displaystyle\\frac{dy}{dx} = y^2 - \\frac{\\alpha^2 + \\beta^2 + 1}{x^2}\\)<span></span> satisfying <span></span>\\(\\displaystyle y(1) = 4(\\alpha^2 + \\beta^2)\\)<span></span>. Then <span></span>\\(\\displaystyle\\int_{1/2}^{1} y(x)\\,dx\\)<span></span> is equal to:",
+      "options": [
+        "<span></span>\\(\\displaystyle\\ln\\left(\\frac{4}{15}\\right)\\)<span></span><span></span>",
+        "<span></span>\\(\\displaystyle\\ln\\left(\\frac{15}{4}\\right)\\)<span></span><span></span>",
+        "<span></span>\\(\\displaystyle \\ln\\left(\\frac{15}{8}\\right)\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\ln \\left({\\frac{8}{15}}\\right)\\)<span></span><span></span>"
+      ],
+      "answer": 1,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 5
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle \\zeta = e^{i\\pi/3}\\)<span></span>. The number of ordered 6-tuples <span></span>\\(\\displaystyle (z_1, z_2, \\ldots, z_6)\\)<span></span> with each <span></span>\\(\\displaystyle z_k \\in \\{1, \\zeta, \\zeta^2, \\zeta^3, \\zeta^4, \\zeta^5\\}\\)<span></span> (repetition allowed), satisfying <span></span>\\(\\displaystyle z_1 + z_2 + \\cdots + z_6 = 0\\)<span></span> and <span></span>\\(\\displaystyle z_1 z_2 \\cdots z_6 = -1\\)<span></span>, is: <br><span></span>",
+      "options": [
+        "<span></span>\\(\\displaystyle 720\\)<span></span>",
+        "\\(780\\)",
+        "\\(840\\)",
+        "\\(900\\)"
+      ],
+      "answer": 1,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 7
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle I_n = \\int_0^1 \\frac{x^{n-1}}{x^2 - x + 1}\\,dx\\)<span></span> for <span></span>\\(\\displaystyle n \\ge 1\\)<span></span>, and let the sequence <span></span>\\(\\displaystyle (u_n)\\)<span></span> be defined by <span></span>\\(\\displaystyle u_1 = u_2 = 1\\)<span></span> and <span></span>\\(\\displaystyle u_{n+2} = u_{n+1} - u_n\\)<span></span> for <span></span>\\(\\displaystyle n \\ge 1\\)<span></span>. The value of the convergent series <span></span>\\(\\displaystyle \\sum_{n=1}^{\\infty} u_n I_n\\)<span></span> is: <br><span></span>",
+      "options": [
+        "<span></span>\\(\\displaystyle \\frac{2}{3} + \\frac{2\\pi}{9\\sqrt{3}}\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\frac{1}{3} + \\frac{4\\pi}{9\\sqrt{3}}\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\frac{2}{3} + \\frac{4\\pi}{9\\sqrt{3}}\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\frac{4\\pi}{9\\sqrt{3}}\\)<span></span>"
+      ],
+      "answer": 2,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 8
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle z \\in \\mathbb{C}\\)<span></span> with <span></span>\\(\\displaystyle |z| = 1\\)<span></span>, and let <span></span>\\(\\displaystyle w = z + \\frac{3}{z - 2}\\)<span></span>. If the set of values of <span></span>\\(\\displaystyle \\mathrm{Re}(w)\\)<span></span> is the interval <span></span>\\(\\displaystyle [\\alpha, \\beta]\\)<span></span>, and <span></span>\\(\\displaystyle n\\)<span></span> is the number of complex numbers <span></span>\\(\\displaystyle z\\)<span></span> with <span></span>\\(\\displaystyle |z| = 1\\)<span></span> for which <span></span>\\(\\displaystyle \\mathrm{Re}(w) = \\frac{\\alpha + \\beta}{2}\\)<span></span>, then <span></span>\\(\\displaystyle n - 2\\alpha - 3\\beta\\)<span></span> is equal to: <br><span></span>",
+      "options": [
+        "<span></span>\\(\\displaystyle 7\\)<span></span>",
+        "<span></span>\\(\\displaystyle 9\\)<span></span>",
+        "<span></span>\\(\\displaystyle 11\\)<span></span>",
+        "<span></span>\\(\\displaystyle 13\\)<span></span>"
+      ],
+      "answer": 2,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 9
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Consider the following statements about complex numbers:<br>(I) If <span></span>\\(\\displaystyle z_1, z_2\\)<span></span> are non-zero complex numbers with <span></span>\\(\\displaystyle |z_1 + z_2| = |z_1| + |z_2|\\)<span></span>, then <span></span>\\(\\displaystyle \\mathrm{Arg}(z_1) = \\mathrm{Arg}(z_2)\\)<span></span>, where <span></span>\\(\\displaystyle \\mathrm{Arg}\\)<span></span> denotes the principal argument in <span></span>\\(\\displaystyle (-\\pi, \\pi]\\)<span></span>.<br>(II) If <span></span>\\(\\displaystyle z_1, z_2\\)<span></span> both lie in the open upper half-plane <span></span>\\(\\displaystyle \\{z : \\mathrm{Im}(z) &gt; 0\\}\\)<span></span>, then <span></span>\\(\\displaystyle \\mathrm{Arg}(z_1 z_2) = \\mathrm{Arg}(z_1) + \\mathrm{Arg}(z_2)\\)<span></span>.<br>(III) If <span></span>\\(\\displaystyle \\omega\\)<span></span> is a primitive <span></span>\\(\\displaystyle n\\)<span></span>-th root of unity, then <span></span>\\(\\displaystyle \\sum _{k=0}^{n-1} \\left({1+\\omega^k}\\right)^n=2n\\)<span></span>.<br>(IV) The locus of <span></span>\\(\\displaystyle z\\)<span></span> satisfying <span></span>\\(\\displaystyle |z - 1| + |z + 1| = 2\\)<span></span> is the line segment joining <span></span>\\(\\displaystyle -1\\)<span></span> and <span></span>\\(\\displaystyle 1\\)<span></span>.<br>(V) For <span></span>\\(\\displaystyle k &gt; 0,\\ k \\neq 1\\)<span></span> and <span></span>\\(\\displaystyle z_1 \\neq z_2\\)<span></span>, the centre of the locus <span></span>\\(\\displaystyle |z - z_1| = k\\,|z - z_2|\\)<span></span> lies on the line segment joining <span></span>\\(\\displaystyle z_1\\)<span></span> and <span></span>\\(\\displaystyle z_2\\)<span></span>.<br>(VI) If <span></span>\\(\\displaystyle z_1, z_2, z_3\\)<span></span> are distinct and satisfy <span></span>\\(\\displaystyle z_1^2 + z_2^2 + z_3^2 = z_1 z_2 + z_2 z_3 + z_3 z_1\\)<span></span>, then they are the vertices of an equilateral triangle.<br>(VII) For four distinct complex numbers, the cross ratio <span></span>\\(\\displaystyle \\dfrac{(z_1 - z_3)(z_2 - z_4)}{(z_1 - z_4)(z_2 - z_3)}\\)<span></span> is real if and only if the four points are concyclic or collinear.<br>(VIII) Every Möbius transformation <span></span>\\(\\displaystyle w = \\dfrac{az + b}{cz + d}\\)<span></span> with <span></span>\\(\\displaystyle ad - bc \\neq 0\\)<span></span> maps every circle in the plane onto a circle.<br>The number of correct statements is:",
+      "options": [
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)",
+        "\\(6\\)"
+      ],
+      "answer": 2,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 10
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Consider the following statements:\n(I) For every integer <span></span>\\(\\displaystyle n \\ge 3\\)<span></span>, the number of distinct necklaces (rotation and turning over allowed) that can be made from <span></span>\\(\\displaystyle n\\)<span></span> distinct beads is <span></span>\\(\\displaystyle \\dfrac{(n-1)!}{2}\\)<span></span>.\n(II) The number of triangles with vertices among those of a regular <span></span>\\(\\displaystyle 12\\)<span></span>-gon that are isosceles (equilateral triangles included) is <span></span>\\(\\displaystyle 60\\)<span></span>.\n(III) The number of arrangements of the letters of MISSISSIPPI in which no two S are adjacent is <span></span>\\(\\displaystyle 7350\\)<span></span>.\n(IV) The number of ways to choose <span></span>\\(\\displaystyle 4\\)<span></span> numbers from <span></span>\\(\\displaystyle \\{1, 2, \\ldots, 12\\}\\)<span></span> with no two consecutive, where <span></span>\\(\\displaystyle 12\\)<span></span> and <span></span>\\(\\displaystyle 1\\)<span></span> are also regarded as consecutive, is <span></span>\\(\\displaystyle \\binom{9}{4}\\)<span></span>.\n(V) The number of permutations of <span></span>\\(\\displaystyle \\{1, 2, \\ldots, 6\\}\\)<span></span> having exactly <span></span>\\(\\displaystyle 2\\)<span></span> fixed points is <span></span>\\(\\displaystyle 135\\)<span></span>.\nThe number of correct statements is:",
+      "options": [
+        "\\(1\\)",
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(2\\)"
+      ],
+      "answer": 1,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 11
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "The number of permutations <span></span>\\(\\displaystyle \\sigma\\)<span></span> of the set <span></span>\\(\\displaystyle \\{1, 2, \\ldots, 9\\}\\)<span></span> such that <span></span>\\(\\displaystyle \\sigma^6\\)<span></span> is the identity permutation, <span></span>\\(\\displaystyle \\sigma\\)<span></span> has no fixed point, <span></span>\\(\\displaystyle 1\\)<span></span> and <span></span>\\(\\displaystyle 2\\)<span></span> lie in the same cycle of <span></span>\\(\\displaystyle \\sigma\\)<span></span>, and each of <span></span>\\(\\displaystyle 3\\)<span></span> and <span></span>\\(\\displaystyle 4\\)<span></span> lies outside that cycle and in a cycle different from the other's, is:",
+      "options": [
+        "<span></span>\\(\\displaystyle 440\\)<span></span><span></span>",
+        "\\(480\\)",
+        "\\(540\\)",
+        "\\(520\\)"
+      ],
+      "answer": 3,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 12
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle x_1 = 2\\)<span></span> and <span></span>\\(\\displaystyle x_{n+1} = x_n + \\frac{3}{x_n}\\)<span></span> for <span></span>\\(\\displaystyle n \\ge 1\\)<span></span>. Then <span></span>\\(\\displaystyle \\lim_{n \\to \\infty} \\frac{\\sqrt{n}\\,\\left(x_n - \\sqrt{6n}\\right)}{\\ln n}\\) is equal to:",
+      "options": [
+        "<span></span>\\(\\displaystyle \\frac{\\sqrt{6}}{8}\\)<span></span><span></span>",
+        "<span></span>\\(\\displaystyle \\frac{\\sqrt{6}}{4}\\)<span></span><span></span>",
+        "<span></span>\\(\\displaystyle \\frac{3}{8}\\)<span></span><span></span>",
+        "<span></span>\\(\\displaystyle \\frac{\\sqrt{6}}{16}\\)<span></span>"
+      ],
+      "answer": 0,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 13
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "For each positive integer <span></span>\\(\\displaystyle n\\)<span></span>, let <span></span>\\(\\displaystyle T_n\\)<span></span> be the number of ordered pairs of positive integers <span></span>\\(\\displaystyle (a, b)\\)<span></span> such that <span></span>\\(\\displaystyle a \\le b \\le n\\)<span></span>, <span></span>\\(\\displaystyle \\gcd(a, b) = 1\\)<span></span>, <span></span>\\(\\displaystyle a + b\\)<span></span> is odd, and <span></span>\\(\\displaystyle 4ab \\ge n^2\\)<span></span>. Then <span></span>\\(\\displaystyle \\lim_{n \\to \\infty} \\frac{T_n}{n^2}\\)<span></span> is equal to:",
+      "options": [
+        "<span></span>\\(\\displaystyle \\frac{3 - 2\\ln 2}{2\\pi^2}\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\frac{9 - 6\\ln 2}{4\\pi^2}\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\frac{3 - 2\\ln 2}{\\pi^2}\\)<span></span>",
+        "<span></span>\\(\\displaystyle \\frac{3 - 2\\ln 2}{4\\pi^2}\\)<span></span>"
+      ],
+      "answer": 0,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 14
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let <span></span>\\(\\displaystyle A = \\sum_{n=1}^{\\infty} \\int_0^{\\pi/2} \\cos^n x \\,\\cos\\!\\left(nx + \\frac{n\\pi}{3}\\right) dx\\)<span></span> and <span></span>\\(\\displaystyle B = \\sum_{n=1}^{\\infty} \\int_0^{\\pi/2} \\cos^n x \\,\\sin\\!\\left(nx + \\frac{n\\pi}{3}\\right) dx\\)<span></span>, where both series converge. Then <span></span>\\(\\displaystyle \\frac{108\\,(A^2 + B^2)}{\\pi^2}\\)<span></span> is equal to:",
+      "options": [
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)"
+      ],
+      "answer": 2,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 16
+    },
+    {
+      "sectionId": 1,
+      "subsection": "single",
+      "type": "single",
+      "question": "Let \\(\\displaystyle \\omega=e^{2\\pi i/3}\\). For \\(\\displaystyle x&gt;0\\), define \\(\\displaystyle R(x)=\\frac{(1+x)^9+(1+\\omega x)^9+(1+\\omega^2 x)^9}{3(1+x)^9}\\). Let \\(\\displaystyle m\\) be the minimum value of \\(\\displaystyle R(x)\\) over all \\(\\displaystyle x&gt;0\\), and let \\(\\displaystyle \\alpha\\) be the smallest positive value of \\(\\displaystyle x\\) at which \\(\\displaystyle R(\\alpha)=m\\). Define \\(\\displaystyle A=\\int  _{0}^{\\infty  }\\frac{R(x)}{(1+x)^{2}} dx\\) and \\(\\displaystyle B=\\int  _{\\alpha  }^{1/\\alpha  }\\frac{R(x)-m}{(1+x)^{2}} dx\\). Then \\(\\displaystyle \\frac{A}{B}\\) is equal to:",
+      "options": [
+        "\\(\\displaystyle \\frac{96\\sqrt{3}}{79}\\)",
+        "\\(\\displaystyle 12\\)",
+        "\\(\\displaystyle 24\\sqrt{3}\\)",
+        "\\(\\displaystyle 48\\sqrt{3}\\)"
+      ],
+      "answer": 2,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 18
+    },
+    {
+      "sectionId": 1,
+      "subsection": "numerical",
+      "type": "numerical",
+      "question": "For <span></span>\\(s \\ge 0\\)<span></span>, let <span></span>\\(A(s)=\\left|\\,s-3+2i\\,\\right|^{2}\\)<span></span> and <span></span>\\(B(s)=\\left|\\,s+i\\,\\right|^{2}\\)<span></span>. For <span></span>\\(x \\ge 0\\)<span></span>, define <span></span>\\(\\displaystyle g(x)=\\lim_{n\\to\\infty}\\frac{x}{n}\\sum_{k=1}^{n}\\int_0^1\\frac{A\\!\\left(\\frac{kx}{n}\\right)-B\\!\\left(\\frac{kx}{n}\\right)}{B\\!\\left(\\frac{kx}{n}\\right)+t\\left[A\\!\\left(\\frac{kx}{n}\\right)-B\\!\\left(\\frac{kx}{n}\\right)\\right]}\\,dt\\) and let <span></span>\\(\\displaystyle M=\\max_{x\\ge 0} g(x)\\)<span></span>. Let <span></span>\\(w=\\dfrac{(7+4i)^{4}}{(1+2i)^{2}}\\)<span></span> and let <span></span>\\(\\text{arg }(w)\\in (-\\pi ,\\pi ]\\)<span></span> be its principal argument. Then the value of <span></span>\\(\\displaystyle 125 e^{ M-\\text{arg }  (w)}\\) is ______.<span></span><span></span>",
+      "options": [],
+      "answer": 2197,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 19
+    },
+    {
+      "sectionId": 1,
+      "subsection": "numerical",
+      "type": "numerical",
+      "question": "The number of points the digits <span></span>\\(1,2,3,4,5,6\\)<span></span> can be arranged in a row, each used exactly once, so that no two adjacent digits are consecutive integers, (For example, <span></span>\\(135246\\)<span></span> is allowed, but <span></span>\\(134256\\)<span></span> is not, since <span></span>\\(3\\)<span></span> and <span></span>\\(4\\)<span></span> are adjacent), is ______.",
+      "options": [],
+      "answer": 90,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 20
+    },
+    {
+      "sectionId": 1,
+      "subsection": "numerical",
+      "type": "numerical",
+      "question": "A teacher has <span></span>\\(10\\)<span></span> identical chocolates to give to <span></span>\\(3\\)<span></span> students, Asha, Bimal and Chitra. Every student must get at least <span></span>\\(1\\)<span></span> chocolate, and no student may get more than <span></span>\\(6\\)<span></span>. The number of different ways the chocolates can be distributed is ______.",
+      "options": [],
+      "answer": 27,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 21
+    },
+    {
+      "sectionId": 1,
+      "subsection": "numerical",
+      "type": "numerical",
+      "question": "At a conference, <span></span>\\(10\\)<span></span> delegates are present. Some pairs of delegates shake hands, and each pair shakes hands at most once. The smallest number of handshakes that guarantees there are four delegates who have all shaken hands with one another (each of the <span></span>\\(6\\)<span></span> pairs among them shook hands) is ______.",
+      "options": [],
+      "answer": 34,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 22
+    },
+    {
+      "sectionId": 1,
+      "subsection": "numerical",
+      "type": "numerical",
+      "question": "All arrangements of the letters of the word 'SYSTEM' are written in dictionary (alphabetical) order, but only those arrangements that satisfy both the conditions the two S<span></span><span></span>'s are not next to each other and the arrangement does not begin with 'E' are kept. The position (rank) of the word 'SYSTEM' in this list is ______.",
+      "options": [],
+      "answer": 125,
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 23
+    },
+    {
+      "sectionId": 1,
+      "subsection": "multi",
+      "type": "multi",
+      "question": "Let <span></span>\\(\\alpha\\)<span></span> be the root of the equation <span></span>\\(x^{2}-2x+2=0\\)<span></span> having positive imaginary part. For real <span></span>\\(t\\)<span></span>, define <span></span>\\(p(t)=\\text{Im}\\big(e^{\\alpha   t}\\big)\\)<span></span>. Define the following.<br>(i) The numbers <span></span>\\(\\displaystyle u_n=p^{(n)}(0)\\)<span></span> for <span></span>\\(n\\ge 0\\)<span></span>, where <span></span>\\(p^{(n)}\\)<span></span> is the <span></span>\\(n^\\text{th}\\) derivative of <span></span>\\(p\\)<span></span>.<br>(ii) The space curve <span></span>\\(\\displaystyle \\vec r(t)=\\big(p(t),\\,p'(t),\\,p''(t)\\big)\\)<span></span>, and for <span></span>\\(n\\ge 0\\)<span></span> the vectors <span></span>\\(\\displaystyle \\vec a_n=\\vec r^{\\,(n)}(0)\\)<span></span>, where the <span></span>\\(n^{\\text{th}}\\) derivative is taken component wise.<br>Which of the following statements is/are correct?",
+      "options": [
+        "<span></span>\\(\\displaystyle u_n=\\operatorname{Im}(\\omega^{n})\\)<span></span> and <span></span>\\(\\displaystyle u_{n+2}=2u_{n+1}-2u_n\\)<span></span> for every <span></span>\\(n\\ge 0\\)<span></span>, and <span></span>\\(\\displaystyle u_{2026}=2^{1013}\\)<span></span>.",
+        "<span></span>\\(\\displaystyle \\sum_{n=1}^{\\infty}\\frac{u_n}{(n+1)\\,2^{\\,n+1}}=\\frac{\\pi-2\\ln 2}{8}\\)<span></span>.",
+        "The curve <span></span>\\(\\vec r(t)\\)<span></span> lies in a fixed plane through the origin, the vectors <span></span>\\(\\vec a_n,\\vec a_{n+1},\\vec a_{n+2}\\)<span></span> are coplanar for every <span></span>\\(n\\ge 0\\)<span></span>, and <span></span>\\(\\displaystyle |\\vec a_n\\times\\vec a_{n+1}|=3\\cdot 2^{\\,n}\\)<span></span> for every <span></span>\\(n\\ge 0\\)<span></span>.",
+        "<span></span>\\(\\displaystyle \\sum_{n=0}^{7}\\vec a_n=-15\\,(\\hat i+\\hat j)\\)<span></span>, and the angle between this vector and <span></span>\\(\\vec a_1\\)<span></span> is <span></span>\\(\\displaystyle \\frac{\\pi}{4}\\)<span></span>."
+      ],
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 24
+    },
+    {
+      "sectionId": 1,
+      "subsection": "multi",
+      "type": "multi",
+      "question": "Let <span></span>\\(c_0=1\\)<span></span> and <span></span>\\(\\displaystyle c_n=\\sum_{k=0}^{n-1}c_kc_{n-1-k}\\)<span></span> for <span></span>\\(n\\ge1\\)<span></span>, and let <span></span>\\(\\displaystyle F(x)=\\sum_{n=0}^{\\infty}c_nx^n\\)<span></span>. Define <span></span>\\(\\displaystyle r_n=\\sum_{k=0}^{n}(-1)^{n-k}\\binom nk c_k\\)<span></span>.\n\nWhich of the following statements is/are correct?",
+      "options": [
+        "For every <span></span>\\(n\\ge0\\)<span></span>, <span></span>\\(\\displaystyle r_n+r_{n+1}=\\sum_{k\\ge0}\\binom{n}{2k}c_k\\)<span></span>, and <span></span>\\(\\displaystyle\\det\\big[c_{i+j+2}\\big]_{i,j=0}^{n}=n+2\\)<span></span>.",
+        "<span></span>\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{c_n}{n\\,4^{n}}=2\\ln2-1\\)<span></span>, and <span></span>\\(\\displaystyle\\lim_{x\\to\\frac14^-}\\frac{2-F(x)}{\\sqrt{1-4x}}=1\\)<span></span>.",
+        "<span></span>\\(\\displaystyle\\lim_{n\\to\\infty}\\sqrt{\\pi}\\,n^{3/2}\\frac{c_n}{4^{n}}=1\\)<span></span>, <span></span>\\(\\displaystyle\\lim_{n\\to\\infty}n\\left(4-\\frac{c_{n+1}}{c_n}\\right)=6\\)<span></span>, and <span></span>\\(\\displaystyle\\sum_{n=0}^{\\infty}\\frac{c_n^{2}}{16^{n}}=\\frac{16}{\\pi}-4\\)<span></span>.",
+        "<span></span>\\(\\displaystyle\\int_0^{1/4}F(x)\\,dx=1-\\ln2\\)<span></span>, and <span></span>\\(\\displaystyle\\sum_{n=0}^{\\infty}\\left(\\frac{3}{2n+3}\\binom{2n+3}{n}\\right)\\left(\\frac29\\right)^{n}=\\frac{27}{8}\\)<span></span>."
+      ],
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 25
+    },
+    {
+      "sectionId": 1,
+      "subsection": "multi",
+      "type": "multi",
+      "question": "Let <span></span>\\(D(a,b,c)=\\begin{vmatrix} bc-4a^2 &amp; 2ac-b^2 &amp; 2ab-c^2 \\\\ 2ac-b^2 &amp; 2ab-c^2 &amp; bc-4a^2 \\\\ 2ab-c^2 &amp; bc-4a^2 &amp; 2ac-b^2 \\end{vmatrix}\\)<span></span>. Which of the following is/are correct?",
+      "options": [
+        "For <span></span>\\(n\\ge 0\\)<span></span>, let <span></span>\\(\\displaystyle a_n=\\frac12\\sum_{\\substack{0\\le k\\le n\\\\ k\\equiv 0\\,(\\mathrm{mod}\\ 3)}}\\binom{n}{k}\\)<span></span>, <span></span>\\(\\displaystyle b_n=\\sum_{\\substack{0\\le k\\le n\\\\ k\\equiv 1\\,(\\mathrm{mod}\\ 3)}}\\binom{n}{k}\\)<span></span>, <span></span>\\(\\displaystyle c_n=\\sum_{\\substack{0\\le k\\le n\\\\ k\\equiv 2\\,(\\mathrm{mod}\\ 3)}}\\binom{n}{k}\\)<span></span>. Then <span></span>\\(D(a_n,b_n,c_n)=4^n\\)<span></span> for every <span></span>\\(n\\ge 0\\)<span></span>.",
+        "Let <span></span>\\(g(t)=D(t,1,1)\\)<span></span>. Then <span></span>\\(g\\)<span></span> has exactly one local maximum, equal to <span></span>\\(16\\)<span></span> and attained at <span></span>\\(\\displaystyle t=-\\frac{1}{2}\\)<span></span>, and exactly two local minima, both equal to <span></span>\\(0\\)<span></span>.",
+        "The equation <span></span>\\(D(a,b,c)=1\\)<span></span> has exactly <span></span>\\(6\\)<span></span> solutions in integers <span></span>\\((a,b,c)\\)<span></span>.",
+        "<span></span>\\(\\displaystyle \\int _{0}^{1} D\\left(\\frac{1}{2}, x, x^{2}\\right)dx=\\sum _{k=0}^{4}\\frac{(-1)^{k}\\binom4k}{3k+1}=\\frac{243}{455}\\)<span></span>."
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 26
+    },
+    {
+      "sectionId": 1,
+      "subsection": "multi",
+      "type": "multi",
+      "question": "Let <span></span>\\(P\\)<span></span> be a real polynomial of degree at most <span></span>\\(4\\)<span></span> such that <span></span>\\(\\displaystyle\\lim_{x\\to 0}\\left[\\frac{P(-x)}{2x^{3}}\\right]^{\\frac{1}{x}}=\\frac{1}{e^{3}}\\)<span></span>, and let <span></span>\\(f:\\mathbb{R}\\to\\mathbb{R}\\)<span></span> be differentiable at <span></span>\\(0\\)<span></span> with <span></span>\\(f'(0)=1\\)<span></span> and <span></span>\\(f(x+y)=e^{x}f(y)+e^{y}f(x)\\)<span></span> for all real <span></span>\\(x,y\\). Which of the following is/are correct?",
+      "options": [
+        "The equation <span></span>\\(f(f(x))=f(x)\\)<span></span> has exactly one real solution.",
+        "<span></span>\\(P\\)<span></span> has exactly one local extremum, and it is a local maximum of value <span></span>\\(\\displaystyle\\frac{1}{128}\\)<span></span>.",
+        "<span></span>\\(\\displaystyle\\int_{0}^{1} f(x)\\,dx+10\\int_{-1}^{0}P(t)\\,dt=-6\\)<span></span>.",
+        "For every <span></span>\\(n\\ge 1\\)<span></span>, <span></span>\\(\\displaystyle\\sum_{k=0}^{n}\\binom{n}{k}f(k)=n\\,e\\,(1+e)^{n-1}\\)<span></span>."
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 27
+    },
+    {
+      "sectionId": 1,
+      "subsection": "multi",
+      "type": "multi",
+      "question": "For <span></span>\\(n\\ge 2\\)<span></span> let <span></span>\\(\\displaystyle D_n(x)=\\begin{vmatrix} x^{2}-\\frac1{n^{2}} &amp; x^{2}-1 &amp; x^{2}-n^{2}\\\\[4pt] \\left(x-\\frac1n\\right)^{3}+\\left(x+\\frac1n\\right)^{3} &amp; (x-1)^{3}+(x+1)^{3} &amp; (x-n)^{3}+(x+n)^{3}\\\\[4pt] \\left(x-\\frac1n\\right)^{3}-\\left(x+\\frac1n\\right)^{3} &amp; (x-1)^{3}-(x+1)^{3} &amp; (x-n)^{3}-(x+n)^{3}\\end{vmatrix}\\)<span></span>, <span></span>\\(\\displaystyle f_n(x)=\\frac{-\\,n^{3}\\,D_n(x)}{16\\,(n-1)^{3}(n+1)(n^{2}+n+1)}\\)<span></span>. Let <span></span>\\(\\displaystyle x_n&gt;0\\)<span></span> be the positive root of <span></span>\\(\\displaystyle f_n(x)=0\\)<span></span>, <span></span>\\(\\displaystyle M_n=\\max_{x\\ge0}f_n(x)\\)<span></span>, and <span></span>\\(\\displaystyle a_n=\\int_0^{x_n}f_n(x)\\,dx\\)<span></span>. Which of the following statements is/are correct?<div></div>",
+      "options": [
+        "<span></span>\\(\\displaystyle\\sum_{n=2}^{\\infty}\\tan^{-1}\\!\\left(\\frac{1}{n\\sqrt{108\\,a_n}}\\right)=\\frac{\\pi}{4}\\)<span></span>.",
+        "<span></span>\\(\\displaystyle f_n\\to f\\)<span></span> pointwise on <span></span>\\(\\displaystyle\\mathbb R\\)<span></span> with <span></span>\\(\\displaystyle f(x)=x^{3}\\)<span></span>, uniformly on every bounded interval but not on <span></span>\\(\\displaystyle\\mathbb R\\)<span></span>. The maximum of <span></span>\\(\\displaystyle f_n\\)<span></span> on <span></span>\\(\\displaystyle[0,x_n]\\)<span></span> occurs at <span></span>\\(\\displaystyle x=x_n\\sin\\varphi\\)<span></span> with <span></span>\\(\\displaystyle\\cos2\\varphi=-\\frac15\\)<span></span>, and <span></span>\\(\\displaystyle\\lim_{n\\to\\infty}n^{-3/2}\\int_0^{x_n}\\frac{f_n(x)}{\\sqrt{x_n^{2}-x^{2}}}\\,dx=\\frac{2\\sqrt3}{135}\\)<span></span>.",
+        "Let <span></span>\\(\\displaystyle\\psi_n\\)<span></span> be the angle that the tangent to <span></span>\\(\\displaystyle y=f_n(x)\\)<span></span> at its positive point of inflection makes with the positive <span></span>\\(\\displaystyle x\\)<span></span>-axis. Then <span></span>\\(\\displaystyle\\lim_{n\\to\\infty}n\\left(\\frac{\\pi}{2}-\\psi_n\\right)=\\frac{20}{3}\\)<span></span>, and this tangent meets the <span></span>\\(\\displaystyle x\\)<span></span>-axis at <span></span>\\(\\displaystyle x=\\frac{8}{15}\\sqrt{\\frac{n^{2}+n+1}{10\\,n}}\\)<span></span>.",
+        "<span></span>\\(\\displaystyle\\lim_{n\\to\\infty}\\frac1n\\sum_{k=1}^{n}\\frac{f_n\\!\\left(x_n\\sin\\frac{k\\pi}{2n}\\right)}{x_n^{3}}=\\frac{4}{15\\pi}\\)<span></span>."
+      ],
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "totalMarks": 4,
+      "negativeMarks": 1,
+      "images": [],
+      "tables": [],
+      "id": 28
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "sections": [
+    {
+      "id": 1,
+      "name": "Mathematics",
+      "order": 1,
+      "subsections": [
+        {
+          "id": "single",
+          "label": "Single Correct Questions",
+          "type": "single"
+        },
+        {
+          "id": "numerical",
+          "label": "Integer Type Questions",
+          "type": "numerical"
+        },
+        {
+          "id": "multi",
+          "label": "Multiple Correct Questions",
+          "type": "multi"
+        }
+      ]
+    }
+  ]
+}

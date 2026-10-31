@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>CBT</title>
+
+<link rel="stylesheet" href="style.css?v=test-layout-help-4">
+
+<script>
+
+window.MathJax = {
+
+  tex: {
+
+    inlineMath: [['\\(', '\\)']]
+  }
+};
+
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage">
+
+  <button id="loginThemeBtn"
+onclick="toggleTheme()"
+title="Toggle Theme">
+
+🌙
+
+</button>
+
+  <div id="loginCard">
+
+    <div id="loginBrand">
+      <div id="loginLogo">📝</div>
+      <h1 id="loginTitle">Welcome</h1>
+      <p id="loginSubtitle">Enter your email to begin the assessment</p>
+    </div>
+
+    <form
+    id="loginForm"
+    autocomplete="on">
+
+      <div id="loginInputGroup">
+        <label for="emailInput" id="loginEmailLabel">Email Address</label>
+        <div id="loginInputWrapper">
+          <span id="loginInputIcon">✉️</span>
+          <input
+          type="email"
+          id="emailInput"
+          name="username"
+          placeholder="you@example.com"
+          autocomplete="username email"
+          required>
+        </div>
+      </div>
+
+      <input type="submit" style="display:none">
+
+      <button id="startBtn" type="button" onclick="startQuiz()">
+        <span id="startBtnText">Start Test</span>
+        <span id="startBtnArrow">→</span>
+      </button>
+
+    </form>
+
+    <div id="loginFooter">
+      <p>By continuing, you agree to the test guidelines.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PROCTORING SETUP OVERLAY -->
+
+<div id="proctorOverlay" style="display:none;">
+
+  <div id="proctorCard">
+
+    <div id="proctorHeader">
+      <h1>🎥 Proctoring Setup</h1>
+    </div>
+
+    <div id="proctorBody">
+
+      <p id="proctorIntro">This test is monitored by the exam conductor.</p>
+
+      <div class="proctor-step" id="proctorCameraStep">
+        <div class="proctor-step-info">
+          <h3>📷 Camera</h3>
+          <p>Your camera is streamed live to the exam conductor during the test.</p>
+        </div>
+        <div class="proctor-step-action">
+          <button class="proctor-btn" type="button" onclick="enableCamera()">Enable Camera</button>
+          <span class="proctor-status" id="cameraStatus">Not enabled</span>
+        </div>
+        <video id="proctorVideo" class="proctor-video" autoplay muted playsinline></video>
+      </div>
+
+      <div class="proctor-step" id="proctorAudioStep">
+        <div class="proctor-step-info">
+          <h3>🎤 Microphone</h3>
+          <p>Your microphone level and short audio clips are shared with the exam conductor.</p>
+        </div>
+        <div class="proctor-step-action">
+          <button class="proctor-btn" type="button" onclick="enableMicrophone()">Enable Microphone</button>
+          <span class="proctor-status" id="audioStatus">Not enabled</span>
+        </div>
+      </div>
+
+      <div class="proctor-step" id="proctorScreenStep">
+        <div class="proctor-step-info">
+          <h3>🖥️ Screen sharing</h3>
+          <p>Share your screen with the exam conductor. Choose a screen, window, or tab in the browser dialog; everything visible on that selection can be seen.</p>
+        </div>
+        <div class="proctor-step-action">
+          <button class="proctor-btn" type="button" onclick="enableScreenShare()">Share Screen</button>
+          <span class="proctor-status" id="screenStatus">Not enabled</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="proctorFooter">
+      <p id="proctorWarning" class="proctor-warning pending">Monitoring is not set up yet.</p>
+      <button id="proctorContinueBtn" type="button" onclick="finishProctorSetup()">▶ Continue</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="proctorBadge" style="display:none;">🔴 Proctoring active</div>
+
+<!-- INSTRUCTIONS OVERLAY -->
+
+<div id="instructionsOverlay" style="display:none;">
+
+  <div id="instructionsContainer">
+
+    <div id="instructionsHeader">
+
+      <h1>📝 Test Instructions</h1>
+
+      <button id="instructionsThemeBtn" onclick="toggleTheme()">🌙</button>
+
+    </div>
+
+    <div id="instructionsBody">
+
+      <!-- Dynamically populated by script.js -->
+
+    </div>
+
+    <div id="instructionsFooter">
+
+      <button id="continueBtn" onclick="continueToTest()">▶ Continue Test</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- QUIZ -->
+
+<div id="quizContainer" style="display:none;">
+
+<div id="sidebar">
+
+<div id="sidebarTop">
+
+<div id="progressContainer">
+
+<div id="progressBar"></div>
+
+</div>
+
+<p id="progressText">
+
+0 / 0 Attempted
+
+</p>
+
+</div>
+
+<div id="sidebarScrollable">
+
+<h2>Questions</h2>
+
+<div id="allNav"></div>
+
+</div>
+
+</div>
+
+<div id="main">
+
+<div id="mainTopBar">
+
+<div id="chatWidget" style="display:none;">
+
+  <button id="chatToggleBtn" type="button" onclick="toggleChatPanel()" title="Need help">
+    💬 <span id="chatToggleLabel">Need help?</span>
+    <span id="chatUnreadBadge" class="chat-unread" style="display:none;">0</span>
+  </button>
+
+  <div id="chatPanel" style="display:none;">
+    <div id="chatPanelHeader">
+      <span>💬 Help Chat</span>
+      <button id="chatCloseBtn" type="button" onclick="toggleChatPanel()" title="Close">✕</button>
+    </div>
+    <div id="chatPanelMessages"></div>
+    <div id="chatPanelInputRow">
+      <input id="chatPanelInput" type="text" maxlength="1000" placeholder="Type your question..."
+        onkeydown="if(event.key==='Enter'){sendStudentChat();event.preventDefault();}">
+      <button id="chatSendBtn" type="button" onclick="sendStudentChat()">Send</button>
+    </div>
+    <div id="chatPanelHint">The exam conductor will reply here.</div>
+  </div>
+
+</div>
+
+<h2 id="timer">
+--:--:--
+</h2>
+
+<button id="examSubmitBtn" class="submitBtn" onclick="submitTest()">
+Submit Test
+</button>
+
+<button id="themeBtn"
+onclick="toggleTheme()">
+
+🌙
+
+</button>
+
+<button
+id="showInstructionsBtn"
+title="View Instructions"
+onclick="showInstructionsOverlay()">
+
+📋
+
+</button>
+
+</div>
+
+<div id="questions"></div>
+
+</div>
+
+</div>
+
+<!-- LOAD QUESTIONS FROM SERVER -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

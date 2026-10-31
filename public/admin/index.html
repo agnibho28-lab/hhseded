@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f0f2f5;padding:20px;color:#333}
+
+/* LOGIN OVERLAY */
+#loginOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;z-index:9999}
+#loginBox{background:white;padding:40px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3);width:380px;max-width:90vw;text-align:center}
+#loginBox h2{font-size:24px;margin-bottom:6px;color:#333}
+#loginBox p{color:#888;font-size:14px;margin-bottom:24px}
+#loginBox .lock-icon{font-size:48px;margin-bottom:12px}
+#loginBox input{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;outline:none;transition:0.2s;box-sizing:border-box}
+#loginBox input:focus{border-color:#667eea}
+#loginBox .login-error{color:#d32f2f;font-size:13px;margin-top:8px;min-height:20px}
+#loginBox button{width:100%;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:16px;transition:0.2s}
+#loginBox button:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(102,126,234,0.4)}
+#loginBox button:active{transform:translateY(0)}
+
+#adminContainer{display:none;max-width:1100px;margin:auto}
+
+h1{margin-bottom:4px;font-size:26px}
+.header-desc{color:#666;margin-bottom:20px;font-size:14px}
+
+/* TABS */
+.tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid #ddd}
+.tab{background:#f8f9fa;border:1px solid #ddd;border-bottom:none;padding:12px 24px;cursor:pointer;font-size:14px;font-weight:bold;color:#666;border-radius:8px 8px 0 0;transition:0.2s}
+.tab:hover{background:#e8e8e8}
+.tab.active{background:white;color:#1976d2;border-bottom:2px solid white;margin-bottom:-2px}
+
+/* TAB CONTENT */
+.tab-content{display:none;background:white;padding:25px;border-radius:0 12px 12px 12px;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+.tab-content.active{display:block}
+
+/* FORMS */
+.form-group{margin-bottom:15px}
+.form-group label{display:block;font-weight:bold;margin-bottom:5px;font-size:13px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box}
+.form-group textarea{min-height:70px;resize:vertical;font-family:monospace}
+.form-group select{background:white;cursor:pointer}
+
+/* OPTION ROWS */
+.option-row{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
+.option-row textarea{flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:13px;min-height:50px;resize:vertical;font-family:monospace}
+.option-row button{padding:6px 12px;background:#ff4d4d;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;margin-top:2px}
+
+/* One visual composition surface for question text, choices, and inline assets. */
+.visual-editor-shell{border:1px solid #cfd7e3;border-radius:12px;overflow:hidden;background:white;box-shadow:0 2px 8px rgba(20,40,70,.06)}
+.visual-editor-toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:9px 10px;background:#f5f7fb;border-bottom:1px solid #e1e6ef}
+.visual-editor-toolbar button{min-height:34px;padding:6px 11px;border:1px solid #d6dce7;border-radius:7px;background:white;color:#27364b;font-size:13px;cursor:pointer}
+.visual-editor-toolbar button:hover{background:#eaf2ff;border-color:#9bb9e8}
+.visual-editor-toolbar .visual-toolbar-add-option{margin-left:auto;background:#e8f5e9;border-color:#c8e6c9;color:#256029}
+.visual-editor-toolbar .visual-toolbar-preview{background:#1976d2;border-color:#1976d2;color:#fff;font-weight:bold}
+.visual-editor-toolbar .visual-toolbar-preview:hover{background:#1565c0;border-color:#1565c0}
+.visual-toolbar-divider{width:1px;height:24px;background:#d6dce7;margin:0 3px}
+.visual-writing-area{padding:20px 22px;min-height:300px;background:#fff}
+.visual-field-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#637083;margin-bottom:9px}
+.visual-editable{outline:none;line-height:1.75;font-size:15px;color:#202b3b;overflow-wrap:anywhere;white-space:pre-wrap}
+.visual-editable:focus{outline:none}
+.question-editable{min-height:105px;padding:8px 10px 18px;border-bottom:1px solid #e6eaf0}
+.visual-editable:empty::before{content:attr(data-placeholder);color:#a0a8b5;pointer-events:none}
+.visual-options-area{margin-top:19px}
+.visual-options-heading{display:flex;align-items:center;gap:10px;margin-bottom:9px;color:#344054;font-size:13px}
+.visual-options-heading span{color:#929baa;font-size:11px;font-weight:normal}
+.visual-options-list{display:flex;flex-direction:column;gap:8px}
+.option-row{display:grid;grid-template-columns:24px 28px minmax(0,1fr) 30px;align-items:start;gap:8px;margin:0;padding:9px;border:1px solid #e1e6ee;border-radius:9px;background:#fbfcfe;transition:border-color .15s,opacity .15s}
+.option-row.is-dragging{opacity:.45;border-color:#1976d2}
+.visual-option-drag{width:23px;height:28px;padding:0!important;margin:0!important;border:0!important;border-radius:5px!important;background:transparent!important;color:#8290a3!important;font-size:16px!important;line-height:1!important;cursor:grab!important;user-select:none}
+.visual-option-drag:active{cursor:grabbing!important}
+.visual-option-label{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#eaf2ff;color:#2865b0;font-size:12px;font-weight:bold}
+.visual-option-editable{min-height:30px;padding:3px 4px}
+.visual-choice-remove{width:28px;height:28px;padding:0!important;margin:0!important;border:1px solid #f0c6c6!important;border-radius:6px!important;background:#fff!important;color:#c62828!important;font-size:19px!important;cursor:pointer}
+.visual-choice-remove:hover{background:#ffebee!important}
+.visual-add-choice{margin-top:9px;padding:8px 12px;border:1px dashed #9eb7d7;border-radius:7px;background:#f6faff;color:#2865b0;font-size:12px;font-weight:bold;cursor:pointer}
+.visual-add-choice:hover{background:#eaf2ff}
+.visual-editor-hint{margin:8px 2px 0;color:#778195;font-size:11px;line-height:1.5}
+.visual-image-asset{position:relative;display:block;width:100%;max-width:100%;margin:8px 0;padding:6px;border:1px solid #d9e0ea;border-radius:7px;background:#f8fafc;box-sizing:border-box}
+.visual-inline-image{display:inline-block;max-width:min(520px,100%);max-height:360px;object-fit:contain;border-radius:4px;vertical-align:middle}
+.visual-image-controls{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;margin-top:6px;padding:5px;border-radius:6px;background:#edf2f8;color:#506078;font-size:10px}
+.visual-image-controls label{display:flex;align-items:center;gap:5px;margin:0;font-size:10px}
+.visual-image-controls input[type=range]{width:95px;margin:0}
+.visual-image-size-value{min-width:32px;font-variant-numeric:tabular-nums}
+.visual-image-align{padding:3px 7px;border:1px solid #cbd4e0;border-radius:4px;background:#fff;color:#45546a;font-size:10px;cursor:pointer}
+.visual-image-align.active{border-color:#1976d2;background:#e3efff;color:#1557a5;font-weight:bold}
+.visual-equation-asset{position:relative;display:inline-block;vertical-align:middle;margin:2px 4px;padding:2px 5px;border:1px solid #dce5f2;border-radius:6px;background:#f7faff;cursor:pointer}
+.visual-equation-render{display:inline-block;min-height:1.3em}
+.visual-asset-remove{position:absolute;top:-9px;right:-9px;width:20px;height:20px;padding:0;border:1px solid #d33;border-radius:50%;background:#fff;color:#c62828;font-size:15px;line-height:17px;cursor:pointer;opacity:0;transition:opacity .15s}
+.visual-image-asset:hover .visual-asset-remove,.visual-equation-asset:hover .visual-asset-remove{opacity:1}
+.visual-table-block{position:relative;display:block;max-width:100%;margin:14px 0;padding:8px;border:1px solid #d7e0ed;border-radius:8px;background:#fcfdff;overflow-x:auto}
+.visual-table-controls{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.visual-table-controls button{padding:4px 8px;border:1px solid #d3dce8;border-radius:5px;background:#fff;color:#45546a;font-size:10px;cursor:pointer;white-space:nowrap}
+.visual-table-controls button:hover{border-color:#8bb3e8;background:#f2f7ff}
+.visual-table-controls .visual-table-remove{margin-left:auto;border-color:#efc4c4;background:#fff5f5;color:#a52a2a}
+.visual-inline-table{min-width:260px;border-collapse:collapse;margin:0 auto}
+.visual-inline-table caption{padding:4px;font-size:12px;color:#667085}
+.visual-inline-table th,.visual-inline-table td{min-width:70px;padding:8px 10px;border:1px solid #bbc6d5;text-align:center;cursor:text}
+.visual-inline-table th{background:#eaf2ff;font-weight:bold}
+.visual-inline-table td:focus,.visual-inline-table th:focus,.visual-inline-table caption:focus{outline:2px solid #8cb7f0;outline-offset:-2px;background:#fff}
+.visual-editor-dialog-overlay{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(17,24,39,.5)}
+.visual-editor-dialog{width:min(520px,100%);max-height:90vh;overflow:auto;border-radius:13px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+.visual-editor-dialog.visual-equation-dialog{width:min(980px,96vw);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);display:flex;flex-direction:column;overflow:hidden}
+.visual-editor-dialog-header{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;border-bottom:1px solid #e7eaf0;color:#26364a}
+.visual-dialog-close{width:30px;height:30px;border:0;border-radius:6px;background:#f1f3f6;color:#596579;font-size:20px;cursor:pointer}
+.visual-editor-dialog-body{padding:18px}
+.visual-equation-dialog .visual-editor-dialog-header{flex:0 0 auto;padding:10px 14px}
+.visual-equation-dialog .visual-editor-dialog-body{flex:1 1 auto;min-height:0;overflow:auto;padding:10px 14px}
+.visual-equation-dialog .visual-editor-dialog-actions{flex:0 0 auto;padding:8px 14px 10px}
+.visual-equation-category-tabs{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.visual-equation-category-tabs button{min-height:27px;padding:4px 10px;border:1px solid #d6dce7;border-radius:6px;background:#f7f9fc;color:#46556b;font-size:11px;cursor:pointer}
+.visual-equation-category-tabs button:hover{border-color:#9bb9e8;background:#eaf2ff}
+.visual-equation-category-tabs button.active{border-color:#1976d2;background:#e4f0ff;color:#1557a5;font-weight:bold}
+.visual-equation-template-groups{min-height:28px;margin-bottom:5px}
+.visual-equation-dialog .visual-equation-template-group{min-width:0;margin-bottom:0}
+.visual-equation-dialog .visual-equation-templates{gap:4px;margin-bottom:0}
+.visual-equation-dialog .visual-equation-templates button{min-height:25px;padding:4px 7px;font-size:11px}
+.visual-equation-canvas-wrap{margin:5px 0 7px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;overflow:hidden}
+.visual-equation-canvas-heading{display:flex;align-items:baseline;gap:8px;padding:5px 9px;border-bottom:1px solid #e5eaf0;background:#f7f9fc;color:#344054;font-size:10px}
+.visual-equation-canvas-heading span{flex:1;color:#788397;font-size:9px;font-weight:normal}
+.visual-equation-history-controls{display:flex;align-items:center;gap:3px;margin-left:auto}
+.visual-equation-history-controls button{width:25px;height:22px;padding:0;border:1px solid #d3dce8;border-radius:4px;background:#fff;color:#45546a;font-size:15px;line-height:1;cursor:pointer}
+.visual-equation-history-controls button:disabled{opacity:.4;cursor:default}
+.visual-equation-history-controls button:not(:disabled):hover{border-color:#8bb3e8;background:#f2f7ff}
+.visual-equation-composer{min-height:86px;max-height:125px;overflow:auto;padding:9px 11px;outline:none;color:#182536;font:18px/2 "Cambria Math","STIX Two Math",Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere}
+.visual-equation-composer:empty::before{content:attr(data-placeholder);color:#9aa5b4;font:12px Arial,sans-serif}
+.visual-equation-composer:focus{box-shadow:inset 0 0 0 2px #cde2d4}
+.visual-equation-structure{display:inline-block;vertical-align:middle;margin:1px 3px;color:#182536;line-height:1.15;user-select:none}
+.visual-equation-token{display:inline-block;vertical-align:middle;padding:0 1px;color:#182536;font:inherit;font-style:normal;white-space:pre}
+.visual-equation-slot{display:inline-block;min-width:34px;min-height:1.25em;padding:0 4px;border:1px dashed #8ca7c5;border-radius:3px;background:#fff;color:#182536;text-align:center;vertical-align:middle;font:inherit;line-height:1.25;outline:none;user-select:text;white-space:pre-wrap}
+.visual-equation-slot:empty::before{content:attr(data-placeholder);color:#9aa9bb;font:11px Arial,sans-serif;white-space:nowrap}
+.visual-equation-slot:focus{border-color:#25864a;outline:2px solid #cce7d4;outline-offset:1px}
+.visual-equation-fraction{display:inline-flex;flex-direction:column;align-items:stretch;min-width:42px;text-align:center;line-height:1.15}
+.visual-equation-fraction .visual-equation-slot{min-width:40px;min-height:1.1em;border-color:#8ca7c5}
+.visual-equation-fraction-bar{height:1px;min-width:42px;background:#182536}
+.visual-equation-root{display:inline-flex;align-items:center;font-size:1.15em}
+.visual-equation-radicand{min-width:34px;border-top:1px solid #182536!important;border-radius:0!important}
+.visual-equation-power,.visual-equation-subscript{display:inline-flex;align-items:baseline}
+.visual-equation-power .visual-equation-exponent,.visual-equation-subscript .visual-equation-subscript{min-width:25px;min-height:1em;padding:0 3px;font-size:.68em;line-height:1.1}
+.visual-equation-power .visual-equation-exponent{align-self:flex-start;margin-top:-.35em}
+.visual-equation-subSup{display:inline-grid;grid-template-columns:auto auto;grid-template-rows:.68em 1.1em .68em;align-items:center;column-gap:2px;vertical-align:middle}
+.visual-equation-subSup>.visual-equation-base{grid-area:1/1/4/2}
+.visual-equation-subSup>.visual-equation-exponent{grid-area:1/2;min-width:24px;font-size:.62em}
+.visual-equation-subSup>.visual-equation-subscript{grid-area:3/2;min-width:24px;font-size:.62em}
+.visual-equation-limit{display:inline-flex;align-items:center}
+.visual-equation-limit .visual-equation-lower{min-width:48px;margin:1em 0 0 -2px;font-size:.65em}
+.visual-equation-limitArrow{display:inline-flex;align-items:baseline;gap:1px}
+.visual-equation-limitArrow>[data-equation-slot=approach-variable],.visual-equation-limitArrow>[data-equation-slot=approach-target]{min-width:20px;margin-top:.65em;font-size:.62em}
+.visual-equation-limitArrow>.visual-equation-token:not(:first-child){font-size:.65em}
+.visual-equation-sum,.visual-equation-definiteIntegral{display:inline-grid;grid-template-rows:.72em 1.15em .72em;grid-template-columns:auto auto;align-items:center;column-gap:3px;text-align:center}
+.visual-equation-sum>.visual-equation-token,.visual-equation-definiteIntegral>.visual-equation-token{grid-area:2/1;font-size:1.45em}
+.visual-equation-sum>[data-equation-slot=upper],.visual-equation-definiteIntegral>[data-equation-slot=upper]{grid-area:1/1;font-size:.62em}
+.visual-equation-sum>[data-equation-slot=lower],.visual-equation-definiteIntegral>[data-equation-slot=lower]{grid-area:3/1;font-size:.62em}
+.visual-equation-sum>[data-equation-slot=body],.visual-equation-definiteIntegral>[data-equation-slot=body]{grid-area:1/2/4/3}
+.visual-equation-integral{display:inline-flex;align-items:center;gap:3px}
+.visual-equation-integral>.visual-equation-token{font-size:1.4em}
+.visual-equation-matrix{padding:0 4px}
+.visual-equation-matrix{position:relative}
+.visual-equation-matrix-grid{display:inline-grid;gap:2px;vertical-align:middle}
+.visual-equation-matrix-cell{min-width:32px;min-height:24px;padding:1px 4px;font-size:.85em}
+.visual-equation-matrix-tools{position:absolute;z-index:4;top:-22px;left:0;display:none;align-items:center;gap:2px;padding:2px;border:1px solid #d5dce7;border-radius:5px;background:#fff;box-shadow:0 2px 7px rgba(20,35,55,.12);white-space:nowrap}
+.visual-equation-matrix:hover .visual-equation-matrix-tools,.visual-equation-matrix:focus-within .visual-equation-matrix-tools{display:flex}
+.visual-equation-matrix-tools button{padding:3px 5px;border:1px solid #d3dce8;border-radius:4px;background:#fff;color:#45546a;font:10px Arial,sans-serif;cursor:pointer}
+.visual-equation-matrix-tools button:disabled{opacity:.4;cursor:default}
+.visual-equation-matrix-tools button:hover{border-color:#8bb3e8;background:#f2f7ff}
+.visual-equation-cases{position:relative;padding-left:12px}
+.visual-equation-cases:before{position:absolute;left:0;top:50%;content:"{";transform:translateY(-50%);font-size:2.3em;line-height:1}
+.visual-equation-aligned{padding:0 3px}
+.visual-equation-vectorArrow{position:relative;padding-top:5px}
+.visual-equation-vectorArrow:before{position:absolute;top:-.15em;left:50%;content:"→";transform:translateX(-50%);font-size:.85em;line-height:1}
+.visual-equation-matrix-customizer{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px;color:#58677b;font-size:10px}
+.visual-equation-matrix-customizer label{display:flex;align-items:center;gap:4px;margin:0;font-size:10px}
+.visual-equation-matrix-customizer input{width:48px;height:25px;margin:0;padding:3px 5px;border:1px solid #cbd5e1;border-radius:4px;font-size:11px}
+.visual-equation-matrix-customizer button,.visual-equation-bracket-picker button,.visual-equation-bracket-presets button{padding:5px 8px;border:1px solid #d3dce8;border-radius:5px;background:#fff;color:#45546a;font-size:10px;cursor:pointer}
+.visual-equation-matrix-customizer button:hover,.visual-equation-bracket-picker button:hover,.visual-equation-bracket-presets button:hover{border-color:#8bb3e8;background:#f2f7ff}
+.visual-equation-bracket-picker{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.visual-equation-bracket-picker label{display:flex;align-items:center;gap:4px;color:#58677b;font-size:10px}
+.visual-equation-bracket-picker select{height:27px;min-width:70px;padding:3px 6px;border:1px solid #cbd5e1;border-radius:5px;background:#fff;color:#344054;font-size:11px}
+.visual-equation-bracket-presets{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.visual-equation-bracket{display:inline-flex;align-items:center}
+.visual-equation-bracket-body{min-width:44px;margin:0 2px}
+.visual-equation-text-slot{min-width:56px;min-height:1.2em;text-align:left;font:13px/1.25 Arial,sans-serif;vertical-align:baseline}
+.visual-equation-text-slot:empty::before{font:11px Arial,sans-serif}
+.visual-equation-vector{padding:0 10px}
+.visual-equation-vector:before,.visual-equation-vector:after{position:absolute;color:#344054;font-size:1.7em;line-height:1}
+.visual-equation-vector{position:relative}
+.visual-equation-vector:before{content:"(";left:0;top:50%;transform:translateY(-50%)}
+.visual-equation-vector:after{content:")";right:0;top:50%;transform:translateY(-50%)}
+.visual-equation-power-tail{vertical-align:super;font-size:.7em}
+.visual-equation-subscript-tail{vertical-align:sub;font-size:.7em}
+.visual-equation-latex-details{margin:4px 0 7px;color:#68768a;font-size:10px}
+.visual-equation-latex-details summary{width:max-content;cursor:pointer;user-select:none}
+.visual-equation-latex-details .visual-equation-input{margin:5px 0 0}
+.visual-equation-latex-details .visual-dialog-help{margin:3px 0 0}
+.visual-equation-dialog .visual-dialog-label{margin-bottom:4px}
+.visual-equation-dialog .visual-equation-input{min-height:46px;max-height:90px;padding:7px 9px}
+.visual-equation-dialog .visual-dialog-help{margin:0 0 5px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.visual-equation-dialog .visual-displaystyle-toggle{margin-bottom:7px;font-size:11px}
+.visual-equation-dialog .visual-equation-preview-label{margin-bottom:3px}
+.visual-equation-dialog .visual-equation-preview{min-height:38px;padding:6px 10px;font-size:18px}
+.visual-dialog-label{display:block;margin:0 0 8px;color:#4c596c;font-size:12px;font-weight:bold}
+.visual-dialog-label span{font-weight:normal;color:#8b94a3}
+.visual-dialog-help{margin:-7px 0 14px;color:#8b94a3;font-size:11px}
+.visual-equation-template-group{margin-bottom:11px}
+.visual-equation-template-group>span{display:block;margin-bottom:5px;color:#778195;font-size:10px;font-weight:bold;text-transform:uppercase;letter-spacing:.4px}
+.visual-dialog-input{width:100%;margin:0 0 15px;padding:10px 11px;border:1px solid #cfd6e1;border-radius:7px;font:14px Arial,sans-serif}
+.visual-equation-input{min-height:62px;resize:vertical;font-family:Consolas,monospace;line-height:1.5}
+.visual-dialog-input:focus{outline:2px solid #b6d1f5;border-color:#6d9bd7}
+.visual-equation-templates{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.visual-equation-templates button{padding:6px 10px;border:1px solid #d6dce7;border-radius:6px;background:#f7f9fc;color:#344054;font-size:12px;cursor:pointer}
+.visual-equation-templates button:hover{background:#eaf2ff;border-color:#9bb9e8}
+.visual-displaystyle-toggle{display:flex;align-items:center;gap:7px;margin:0 0 14px;color:#4c596c;font-size:12px;cursor:pointer}
+.visual-displaystyle-toggle input{width:auto;margin:0}
+.visual-equation-preview-label{margin-bottom:6px;color:#778195;font-size:11px;font-weight:bold;text-transform:uppercase}
+.visual-equation-preview{min-height:58px;display:flex;align-items:center;justify-content:center;padding:12px;border:1px solid #e0e6ef;border-radius:8px;background:#f8faff;font-size:20px;overflow:auto}
+.visual-dialog-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.visual-editor-dialog-actions{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px 16px;border-top:1px solid #e7eaf0}
+.question-preview-overlay{position:fixed;inset:0;z-index:10060;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(12,17,25,.78)}
+.question-preview-panel{width:min(1320px,98vw);height:min(860px,96vh);display:flex;flex-direction:column;overflow:hidden;border:1px solid #cfd6e1;border-radius:12px;background:#f2f3f5;color:#202124;box-shadow:0 24px 70px rgba(0,0,0,.5)}
+.question-preview-topbar{height:48px;flex:0 0 48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #dce0e6;background:#fff;font-size:13px}
+.question-preview-topbar-actions{display:flex;align-items:center;gap:10px;color:#7a8493;font-size:11px}
+.question-preview-exit{padding:7px 13px;border:0;border-radius:6px;background:#1976d2;color:#fff;font-size:12px;font-weight:bold;cursor:pointer}
+.question-preview-theme-toggle{padding:7px 10px;border:1px solid #d2d9e3;border-radius:6px;background:#f8f9fb;color:#344054;font-size:11px;font-weight:bold;cursor:pointer}
+.question-preview-layout{flex:1;min-height:0;display:grid;grid-template-columns:230px minmax(0,1fr)}
+.question-preview-sidebar{padding:18px 14px;overflow:auto;border-right:1px solid #ddd;background:#fff}
+.question-preview-progress{height:8px;margin-bottom:8px;border-radius:8px;background:#e3e6ec}
+.question-preview-sidebar small{display:block;text-align:center;color:#798292;font-size:10px}
+.question-preview-sidebar h3{margin:25px 0 14px;font-size:17px}
+.question-preview-section-name{margin-bottom:14px;color:#526174;font-size:12px;font-weight:bold}
+.question-preview-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+.question-preview-nav button{height:30px;display:flex;align-items:center;justify-content:center;border:1px solid #ddd;border-radius:5px;background:#fff;color:#333;font-size:11px;cursor:pointer}
+.question-preview-nav button:hover{border-color:#6a96d1;background:#eef5ff}
+.question-preview-nav button.current{border-color:#e95e58;background:#e95e58;color:white}
+.question-preview-main{min-width:0;min-height:0;display:flex;flex-direction:column;background:#f5f5f5}
+.question-preview-testbar{height:48px;flex:0 0 48px;display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 16px;border-bottom:1px solid #ddd;background:#fff}
+.question-preview-timer{font-size:12px;font-weight:bold}
+.question-preview-submit{padding:7px 14px;border:0;border-radius:6px;background:#d879d9;color:#fff;font-weight:bold}
+.question-preview-scroll{flex:1;min-height:0;overflow:auto;margin:12px 14px 0;padding:20px;background:#fff;border:1px solid #e4e6eb;border-radius:8px}
+.question-preview-breadcrumb{margin-bottom:18px;color:#5177aa;font-size:11px}
+.question-preview-guidance{margin-bottom:18px;padding:10px 12px;border:1px solid #d8e2f1;border-radius:7px;background:#f2f6fd;color:#4b5563;font-size:11px;line-height:1.55}
+.question-preview-guidance .question-preview-breadcrumb{margin-bottom:4px}
+.question-preview-guidance strong{color:#344054}
+.question-preview-scroll h2{margin:0 0 15px;font-size:20px}
+.question-preview-question{font-size:15px;line-height:1.8;overflow-wrap:anywhere}
+.question-preview-question img{max-width:100%;height:auto}
+.question-preview-options{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.question-preview-option{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border:1px solid #e4e6eb;border-radius:7px;background:#fff;font-size:14px;line-height:1.65}
+.question-preview-option-mark{width:17px;height:17px;flex:0 0 17px;margin-top:2px;border:2px solid #9aa3b2;border-radius:50%}
+.question-preview-option-mark.multi{border-radius:4px}
+.question-preview-numerical{width:min(320px,100%);margin-top:18px;padding:10px;border:1px solid #ccd3de;border-radius:6px;font-size:14px}
+.question-preview-actions{display:flex;align-items:center;gap:8px;padding:12px 14px 14px;background:#f5f5f5}
+.question-preview-actions .spacer{flex:1}
+.question-preview-actions button{padding:8px 12px;border:0;border-radius:6px;color:#fff;background:#607d8b;font-size:11px}
+.question-preview-actions .review{background:#f2d13e;color:#333}
+.question-preview-actions .next{background:#2e7d32}
+.question-preview-dark{border-color:#111;background:#1c1c1c;color:#eee}
+.question-preview-dark .question-preview-topbar,.question-preview-dark .question-preview-sidebar,.question-preview-dark .question-preview-testbar{border-color:#2e2e2e;background:#202020;color:#eee}
+.question-preview-dark .question-preview-sidebar small,.question-preview-dark .question-preview-section-name{color:#aaa}
+.question-preview-dark .question-preview-progress{background:#444}
+.question-preview-dark .question-preview-nav button{border-color:#444;background:#2c2c2c;color:#eee}
+.question-preview-dark .question-preview-nav button:hover{border-color:#6a96d1;background:#263954}
+.question-preview-dark .question-preview-nav button.current{border-color:#e95e58;background:#e95e58}
+.question-preview-dark .question-preview-main,.question-preview-dark .question-preview-actions{border-color:#333;background:#171717}
+.question-preview-dark .question-preview-scroll{border-color:#333;background:#202020;color:#f0f0f0}
+.question-preview-dark .question-preview-guidance{border-color:#2a3a5a;background:#1a2040;color:#b8c4df}
+.question-preview-dark .question-preview-guidance strong{color:#e0e8ff}
+.question-preview-dark .question-preview-option{border-color:#444;background:#292929;color:#f0f0f0}
+.question-preview-dark .question-preview-option-mark{border-color:#aaa}
+.question-preview-dark .question-preview-numerical{border-color:#555;background:#2c2c2c;color:#fff}
+.question-preview-dark .question-preview-theme-toggle{border-color:#444;background:#303030;color:#eee}
+@media(max-width:700px){.question-preview-overlay{padding:4px}.question-preview-panel{width:100%;height:98vh;border-radius:8px}.question-preview-layout{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(95px,20vh) minmax(0,1fr)}.question-preview-sidebar{display:block;padding:8px;border-right:0;border-bottom:1px solid #ddd}.question-preview-sidebar h3{margin:4px 0;font-size:13px}.question-preview-section-name{margin-bottom:5px;font-size:10px}.question-preview-nav{grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;max-height:72px;overflow:auto}.question-preview-nav button{height:25px}.question-preview-scroll{margin:8px 8px 0;padding:14px}.question-preview-topbar{padding:0 8px}.question-preview-topbar-actions{gap:5px}.question-preview-topbar-actions>span{display:none}.question-preview-actions{padding:9px 8px}.question-preview-actions button{padding:7px 8px;font-size:10px}}
+@media(max-width:620px){.visual-writing-area{padding:15px 12px}.visual-editor-toolbar .visual-toolbar-add-option{margin-left:0}.option-row{grid-template-columns:22px 25px minmax(0,1fr) 28px;gap:5px}}
+@media(max-width:620px){.visual-equation-category-tabs{gap:4px;margin-bottom:5px}.visual-equation-category-tabs button{flex:1 1 auto;padding:4px 7px;font-size:10px}.visual-equation-dialog .visual-equation-templates{gap:3px}.visual-equation-dialog .visual-equation-templates button{min-height:23px;padding:3px 6px;font-size:10px}.visual-equation-dialog .visual-dialog-help{display:none}.visual-equation-dialog .visual-editor-dialog-body{padding:7px 10px}.visual-equation-composer{min-height:66px;max-height:100px;padding:7px 8px;font-size:16px}.visual-equation-canvas-heading span{display:none}.visual-equation-dialog .visual-equation-input{min-height:38px}.visual-equation-dialog .visual-equation-preview{min-height:32px;padding:4px 8px}.visual-equation-slot{min-width:26px}.visual-equation-fraction .visual-equation-slot{min-width:30px}.visual-equation-matrix-cell{min-width:25px;min-height:21px}.visual-equation-matrix-customizer input{width:44px}.visual-equation-bracket-picker{gap:5px}}
+@media(max-height:480px){.visual-equation-composer{min-height:54px;max-height:72px;padding:5px 8px}.visual-equation-canvas-heading{padding:3px 8px}.visual-equation-dialog .visual-equation-preview{min-height:26px;padding:3px 8px}.visual-equation-preview-label{margin-bottom:2px}.visual-equation-dialog .visual-displaystyle-toggle{margin-bottom:4px}}
+
+/* BUTTONS */
+.btn-primary{background:#1976d2;color:white;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:14px}
+.btn-primary:hover{background:#1565c0}
+.btn-secondary{background:#607d8b;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px}
+.btn-secondary:hover{background:#546e7a}
+.btn-danger{background:#d32f2f;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+.btn-danger:hover{background:#c62828}
+.btn-edit{background:#388e3c;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+.btn-edit:hover{background:#2e7d32}
+.btn-warning{background:#f57c00;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+.btn-warning:hover{background:#ef6c00}
+.btn-success{background:#2e7d32;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px}
+.btn-success:hover{background:#1b5e20}
+.btn-info{background:#0288d1;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+.btn-info:hover{background:#0277bd}
+
+.add-option-btn{background:#e0e0e0;border:1px dashed #aaa;padding:8px;border-radius:6px;cursor:pointer;font-size:13px;width:100%;text-align:center;color:#555;margin-bottom:10px}
+.add-option-btn:hover{background:#d0d0d0}
+
+/* SECTION CARDS */
+.section-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid #e0e0e0;border-radius:10px;margin-bottom:10px;background:#fafafa;transition:0.2s}
+.section-card:hover{border-color:#bbb;background:#f5f5f5}
+.section-card .drag{font-size:20px;color:#aaa;cursor:grab;user-select:none}
+.section-card .drag:active{cursor:grabbing}
+.section-card .name{flex:1;font-weight:bold;font-size:15px}
+.section-card .q-count{font-size:12px;color:#888;margin-right:10px}
+.section-card .actions{display:flex;gap:6px}
+
+/* SUBSECTION ORDER */
+.subsection-order-area{margin-top:6px;padding-left:34px;display:flex;flex-direction:column;gap:6px}
+.subsection-order-area .sub-header-row{display:flex;align-items:center;gap:10px}
+.subsection-order-area .sub-label{font-size:11px;color:#888;font-weight:bold}
+.btn-sm{font-size:11px;padding:4px 10px !important}
+.subsection-edit-item{display:flex;align-items:center;gap:6px;background:#f0f4ff;padding:6px 10px;border-radius:6px;border:1px solid #dde8f5;transition:0.2s}
+.subsection-edit-item:hover{background:#e3edfd}
+.sub-label-input{flex:1;min-width:120px;padding:4px 8px;border:1px solid #ccc;border-radius:4px;font-size:12px;background:white}
+.sub-label-input:focus{border-color:#1976d2;outline:none}
+.sub-type-select{padding:4px 6px;border:1px solid #ccc;border-radius:4px;font-size:11px;background:white;cursor:pointer}
+.sub-move-group{display:flex;gap:2px}
+.sub-move{cursor:pointer;font-size:12px;padding:2px 4px;color:#1565c0;transition:0.15s}
+.sub-move:hover{background:#bbdefb;border-radius:3px}
+
+/* QUESTION CARDS */
+.question-card{border:1px solid #e0e0e0;border-radius:10px;padding:16px;margin-bottom:12px;background:#fafafa}
+.question-card .q-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.question-card .q-title{font-weight:bold;font-size:14px}
+.question-card .q-badges{display:flex;gap:6px}
+.question-card .q-badge{font-size:11px;padding:3px 8px;border-radius:4px;font-weight:bold;text-transform:uppercase}
+.q-badge-scq{background:#e3f2fd;color:#1565c0}
+.q-badge-mcq{background:#fce4ec;color:#c62828}
+.q-badge-numerical{background:#e8f5e9;color:#2e7d32}
+.q-badge-section{background:#fff3e0;color:#e65100}
+.q-badge-image{background:#f3e5f5;color:#7b1fa2}
+.q-badge-marks{background:#e8f5e9;color:#1b5e20}
+
+.question-card .q-text{font-size:13px;color:#333;margin-bottom:8px;line-height:1.5;white-space:pre-wrap}
+.question-card .q-answer{font-size:12px;color:#2e7d32}
+.question-card .q-actions{display:flex;gap:8px;margin-top:10px}
+
+/* LIVE PREVIEW */
+.live-preview{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:10px;padding:16px;margin-bottom:15px;min-height:80px}
+.live-preview h4{font-size:13px;color:#666;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.live-preview .preview-content{font-size:14px;line-height:1.8}
+.live-preview .preview-content .preview-option{margin:4px 0;padding:4px 8px;background:white;border-radius:4px;border:1px solid #eee}
+
+/* IMAGE MANAGER */
+.image-manager{border:1px solid #e0e0e0;border-radius:10px;padding:16px;margin-bottom:15px;background:#fafafa}
+.image-manager h4{font-size:13px;color:#666;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.image-upload-area{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.image-upload-area input[type="file"]{flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;background:white;font-size:13px}
+.image-list{display:flex;flex-wrap:wrap;gap:10px}
+.image-item{position:relative;border:1px solid #ddd;border-radius:8px;padding:8px;background:white;width:150px;text-align:center}
+.image-item img{max-width:130px;max-height:100px;border-radius:4px;margin-bottom:6px;cursor:pointer}
+.image-item .img-alt{font-size:10px;color:#888;margin-bottom:4px;word-break:break-all}
+.image-item .img-actions{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.image-item .img-actions button{font-size:10px;padding:3px 6px}
+.image-item .img-id{position:absolute;top:2px;left:4px;background:#1976d2;color:white;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:bold}
+
+/* TABLE BUILDER */
+.table-builder{border:1px solid #e0e0e0;border-radius:10px;padding:16px;margin-bottom:15px;background:#fafafa}
+.table-builder h4{font-size:13px;color:#666;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.table-editor{overflow-x:auto}
+.table-editor table{width:100%;border-collapse:collapse;margin-bottom:10px}
+.table-editor td{border:1px solid #ccc;padding:4px}
+.table-editor td input{width:100%;border:none;padding:6px 4px;font-size:13px;background:transparent;outline:none}
+.table-editor td input:focus{background:#e3f2fd;border-radius:3px}
+.table-editor td .cell-actions{display:flex;gap:2px;justify-content:center}
+.table-editor td .cell-actions button{font-size:9px;padding:1px 4px;background:#eee;border:1px solid #ddd;border-radius:3px;cursor:pointer}
+.table-editor .header-cell{background:#e3f2fd;font-weight:bold}
+.table-controls{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.table-controls button{font-size:12px;padding:5px 10px}
+.table-list-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:6px}
+.table-list-item .tbl-preview{font-size:11px;color:#666;flex:1}
+.table-list-item .tbl-actions{display:flex;gap:4px}
+
+/* SETTINGS */
+.settings-group{max-width:500px;margin-bottom:20px;padding:20px;border:1px solid #e0e0e0;border-radius:10px;background:#fafafa}
+.settings-group h3{margin-bottom:10px;font-size:16px}
+.settings-group .form-group{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.settings-group .form-group label{margin-bottom:0;min-width:120px}
+.settings-group .form-group input{max-width:120px}
+
+/* PREVIEW */
+.preview-section{margin-bottom:25px}
+.preview-section h2{font-size:18px;color:#1976d2;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #e0e0e0}
+.preview-subsection{margin-bottom:15px;margin-left:15px}
+.preview-subsection h3{font-size:14px;font-weight:bold;color:#555;margin-bottom:8px}
+.preview-q{font-size:13px;padding:8px 12px;background:#f8f9fa;border-radius:6px;margin-bottom:6px;border-left:3px solid #1976d2;line-height:1.5}
+.preview-q .pq-num{font-weight:bold;color:#1976d2;margin-right:6px}
+.preview-marks{display:block;font-size:11px;color:#888;margin-top:4px;font-style:italic}
+
+/* Preview images & tables */
+.preview-q img.preview-img{max-width:100%;border-radius:4px;margin:6px 0}
+.preview-q .preview-table-wrap{margin:8px 0;overflow-x:auto}
+.preview-q .preview-table-wrap table{border-collapse:collapse;width:auto;min-width:200px}
+.preview-q .preview-table-wrap td,.preview-q .preview-table-wrap th{border:1px solid #bbb;padding:6px 10px;font-size:12px;text-align:center}
+.preview-q .preview-table-wrap th{background:#e3f2fd;font-weight:bold}
+.preview-q .preview-table-wrap .tbl-caption{font-size:11px;color:#666;font-style:italic;text-align:center;margin-top:2px}
+
+/* BULK IMPORT */
+.bulk-textarea{width:100%;min-height:250px;font-family:monospace;font-size:12px;padding:10px;border:1px solid #ddd;border-radius:8px;resize:vertical}
+.bulk-hint{font-size:12px;color:#888;margin-bottom:10px;background:#fff3e0;padding:10px;border-radius:6px;line-height:1.6}
+
+/* PROCTORING */
+.proctor-note{max-width:720px;margin-bottom:18px;padding:12px 16px;border:1px solid #d6e4f5;background:#eef4fc;border-radius:10px;font-size:12.5px;color:#345;line-height:1.6}
+.proctor-toolbar{display:flex;justify-content:space-between;align-items:center;margin:24px 0 12px;flex-wrap:wrap;gap:8px}
+.proctor-chat-block{margin-top:28px;border-top:1px solid #e0e0e0;padding-top:18px}
+.proctor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.proctor-card{border:1px solid #e0e0e0;border-radius:12px;padding:14px 16px;background:white;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.proctor-card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.proctor-name{font-weight:bold;font-size:14px;word-break:break-all}
+.proctor-state{font-size:11px;font-weight:bold;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.proctor-state.online{background:#e8f5e9;color:#2e7d32}
+.proctor-state.offline{background:#eee;color:#777}
+.proctor-state.submitted{background:#e3f2fd;color:#1565c0}
+.proctor-meta{font-size:11px;color:#888;line-height:1.6;margin-bottom:10px}
+.proctor-frames{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.proctor-frame{background:#f7f7f7;border:1px solid #eee;border-radius:8px;padding:6px;min-height:96px;display:flex;flex-direction:column}
+.proctor-frame-label{font-size:10.5px;color:#666;margin-bottom:4px;font-weight:bold}
+.proctor-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:11px;color:#aaa;text-align:center;min-height:70px}
+.proctor-events{margin-top:10px;border-top:1px dashed #e0e0e0;padding-top:8px;font-size:11px;max-height:96px;overflow:auto}
+.proctor-event{padding:3px 0;color:#555;line-height:1.45;border-bottom:1px solid #f4f4f4}
+.proctor-event-time{color:#999;font-size:10px;margin-right:4px}
+.proctor-event-empty{color:#aaa;font-size:11px}
+.proctor-live-video{width:100%;height:130px;background:#111;border-radius:6px;display:block;object-fit:contain}
+.proctor-live-status{font-size:10px;font-weight:bold;padding:2px 7px;border-radius:10px;margin-left:4px}
+.proctor-live-status.live{background:#e8f5e9;color:#2e7d32}
+.proctor-live-status.waiting{background:#fff3e0;color:#e65100}
+.proctor-live-status.offline{background:#ffebee;color:#c62828}
+.proctor-live-audio-row{margin-top:10px;display:flex;align-items:center;gap:8px;background:#f7f7f7;border:1px solid #eee;border-radius:8px;padding:8px 10px;flex-wrap:wrap}
+.proctor-live-audio-row .proctor-audio-label{font-size:11.5px;font-weight:bold;color:#555}
+.proctor-live-audio-row .proctor-audio-status{margin-left:auto}
+.proctor-live-audio-row .btn-info{font-size:11px;padding:4px 10px}
+.proctor-actions{margin-top:10px;display:flex;justify-content:flex-end;gap:6px}
+
+/* FOCUS VIEW */
+#focusOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,15,25,0.82);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100000;padding:18px;box-sizing:border-box}
+#focusPanel{background:white;border-radius:14px;width:min(1400px,97vw);height:min(860px,95vh);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,0.45)}
+#focusHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid #e0e0e0;background:#f7f9fc;flex-shrink:0}
+#focusTitle{font-weight:bold;font-size:15px;word-break:break-all}
+#focusHeaderActions{display:flex;gap:8px;flex-shrink:0}
+#focusBody{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-rows:minmax(0,1fr);min-height:0}
+#focusMedia{padding:14px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,.9fr) minmax(0,1.15fr) auto;gap:12px;min-width:0;min-height:0;background:#111;overflow-y:auto}
+.focus-video-wrap{display:flex;flex-direction:column;gap:6px;min-width:0;min-height:0}
+.focus-label{color:#ddd;font-size:11.5px;font-weight:bold;display:flex;align-items:center;gap:6px}
+.focus-expand-btn{margin-left:auto;padding:4px 9px;border:1px solid #555;border-radius:6px;background:#282828;color:#eee;font-size:11px;cursor:pointer;white-space:nowrap}
+.focus-expand-btn:hover{background:#3a3a3a}
+#focusCameraVideo,#focusScreenVideo{flex:1;width:100%;min-height:0;border-radius:8px}
+#focusCameraVideo{background:#000;object-fit:cover}
+#focusScreenVideo{background:transparent;object-fit:contain}
+#focusMedia.focus-expanded-camera{grid-template-rows:minmax(0,1fr) auto}
+#focusMedia.focus-expanded-camera .focus-screen{display:none}
+#focusMedia.focus-expanded-screen{grid-template-rows:minmax(0,1fr) auto}
+#focusMedia.focus-expanded-screen .focus-camera{display:none}
+#focusAudioRow{grid-column:1/-1;display:flex;align-items:center;gap:10px;background:#1c1c1c;border-radius:8px;padding:8px 12px;color:#ddd;flex-wrap:wrap;min-width:0}
+#focusAudioRow .proctor-audio-label{font-size:11.5px;font-weight:bold;color:#ddd}
+#focusAudioRow .proctor-live-status{margin-left:0}
+#focusAudio{display:none}
+#focusChat{display:flex;flex-direction:column;min-height:0;border-left:1px solid #e0e0e0;background:white}
+#focusChatHeader{padding:10px 14px;background:#f5f7fa;border-bottom:1px solid #e0e0e0;font-weight:bold;font-size:13px}
+#focusChatMessages{flex:1;overflow-y:auto;padding:12px;background:#fbfbfb}
+#focusChatInputRow{display:flex;gap:8px;padding:10px;border-top:1px solid #e0e0e0}
+#focusChatInput{flex:1;min-width:0;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;outline:none}
+#focusChatInput:focus{border-color:#1976d2}
+.proctor-live-video{cursor:zoom-in}
+.audio-level-meter{height:26px;min-width:70px;display:inline-flex;align-items:center;justify-content:center;gap:3px;padding:0 6px;border-radius:6px;background:#111}
+.audio-level-meter span{display:block;width:4px;height:4px;flex:0 0 4px;border-radius:4px;background:#59616a;transition:height 70ms linear,background-color 100ms linear}
+.audio-level-meter.active span{background:#35cf78;box-shadow:0 0 5px rgba(53,207,120,.35)}
+@media (max-width:820px){
+#focusBody{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 220px}
+#focusChat{border-left:none;border-top:1px solid #e0e0e0}
+}
+
+/* CHAT */
+.tab-badge{display:inline-block;background:#d32f2f;color:white;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:6px;vertical-align:top}
+.chat-admin-wrap{display:flex;gap:14px;min-height:460px}
+.chat-threads{width:240px;flex-shrink:0;border:1px solid #e0e0e0;border-radius:10px;background:#fafafa;overflow-y:auto;max-height:520px}
+.chat-thread{padding:10px 12px;border-bottom:1px solid #eee;cursor:pointer;position:relative}
+.chat-thread:hover{background:#eef3fb}
+.chat-thread.active{background:#e3f2fd;border-left:3px solid #1976d2}
+.chat-thread-email{font-size:12px;font-weight:bold;word-break:break-all;padding-right:22px}
+.chat-thread-last{font-size:11px;color:#777;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-thread-unread{position:absolute;top:10px;right:8px;background:#d32f2f;color:white;font-size:10px;border-radius:9px;padding:1px 6px}
+.chat-thread-empty{font-size:12px;color:#999;padding:16px;text-align:center;line-height:1.5}
+.chat-conversation{flex:1;display:flex;flex-direction:column;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;background:white;min-width:0}
+.chat-conv-head{padding:10px 14px;background:#f5f7fa;border-bottom:1px solid #e0e0e0;font-weight:bold;font-size:13px;color:#333;word-break:break-all}
+.chat-messages{flex:1;padding:14px;overflow-y:auto;max-height:410px;background:#fbfbfb}
+.chat-msg{margin-bottom:10px;max-width:80%}
+.chat-msg-student{margin-left:auto;text-align:right}
+.chat-msg-admin{margin-right:auto;text-align:left}
+.chat-msg-text{padding:8px 12px;border-radius:10px;font-size:13px;line-height:1.5;display:inline-block;text-align:left;white-space:pre-wrap;word-break:break-word}
+.chat-msg-student .chat-msg-text{background:#1976d2;color:white}
+.chat-msg-admin .chat-msg-text{background:#eceff1;color:#222}
+.chat-msg-time{font-size:10px;color:#999;margin-top:3px}
+.chat-empty{font-size:12px;color:#999;text-align:center;padding:30px 10px;line-height:1.6}
+.chat-input-row{display:flex;gap:8px;padding:10px;border-top:1px solid #e0e0e0;background:white}
+.chat-input-row input{flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;outline:none}
+.chat-input-row input:focus{border-color:#1976d2}
+.chat-input-row button{padding:10px 20px}
+
+/* RESULTS */
+.no-data{text-align:center;color:#999;padding:40px;font-size:14px}
+
+.home-link{display:inline-block;margin-bottom:15px;color:#1976d2;text-decoration:none;font-size:14px}
+.home-link:hover{text-decoration:underline}
+
+.form-row{display:flex;gap:12px}
+.form-row .form-group{flex:1}
+
+.form-footer{display:flex;gap:10px;margin-top:15px}
+#cancelBtn{display:none}
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']]
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<!-- LOGIN OVERLAY -->
+<div id="loginOverlay">
+<div id="loginBox">
+<div class="lock-icon">🔒</div>
+<h2>Admin Access</h2>
+<p>Enter your credentials to access the admin panel.</p>
+<input type="email" id="emailInput" placeholder="Email" onkeydown="if(event.key==='Enter')checkPassword()" autofocus style="margin-bottom:10px">
+<input type="password" id="passwordInput" placeholder="Password" onkeydown="if(event.key==='Enter')checkPassword()">
+<div id="loginError" class="login-error"></div>
+<button onclick="checkPassword()">Unlock</button>
+</div>
+</div>
+
+<div id="adminContainer">
+
+<a href="../index.html" class="home-link">&larr; Back to Test</a>
+<h1>📝 Admin Panel</h1>
+<p class="header-desc">Manage sections, questions, settings, and preview the test.</p>
+
+<!-- TABS -->
+<div class="tabs">
+<div class="tab active" data-tab="questions" onclick="switchTab('questions')">📋 Questions</div>
+<div class="tab" data-tab="sections" onclick="switchTab('sections')">📂 Sections</div>
+<div class="tab" data-tab="settings" onclick="switchTab('settings')">⚙️ Settings</div>
+<div class="tab" data-tab="proctoring" onclick="switchTab('proctoring')">🎥 Proctoring<span id="chatTabBadge" class="tab-badge" style="display:none">0</span></div>
+<div class="tab" data-tab="preview" onclick="switchTab('preview')">👁 Preview</div>
+</div>
+
+<!-- TAB: QUESTIONS -->
+<div id="tab-questions" class="tab-content active">
+
+<div id="questionForm">
+<h2 id="formTitle" style="margin-bottom:15px;font-size:17px">Add New Question</h2>
+
+<div class="form-row">
+<div class="form-group">
+<label for="qSection">Section</label>
+<select id="qSection" onchange="onSectionChange()"><option value="">Select section...</option></select>
+</div>
+<div class="form-group">
+<label for="qSubsection">Subsection</label>
+<select id="qSubsection" onchange="toggleOptions(); updateLivePreview();">
+</select>
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label for="qTotalMarks">Total Marks</label>
+<input type="number" id="qTotalMarks" value="4" min="0" step="0.5" oninput="updateLivePreview()">
+</div>
+<div class="form-group">
+<label for="qNegativeMarks">Negative Marks</label>
+<input type="number" id="qNegativeMarks" value="1" min="0" step="0.5" oninput="updateLivePreview()">
+</div>
+</div>
+
+<div class="form-group">
+<label>Question and answer choices</label>
+<div class="visual-editor-shell">
+<div class="visual-editor-toolbar" role="toolbar" aria-label="Question formatting tools">
+<button type="button" onmousedown="event.preventDefault()" onclick="formatVisualText('bold')" title="Bold"><strong>B</strong></button>
+<button type="button" onmousedown="event.preventDefault()" onclick="formatVisualText('italic')" title="Italic"><em>I</em></button>
+<button type="button" onmousedown="event.preventDefault()" onclick="formatVisualText('superscript')" title="Superscript">x<sup>2</sup></button>
+<button type="button" onmousedown="event.preventDefault()" onclick="formatVisualText('subscript')" title="Subscript">x<sub>2</sub></button>
+<span class="visual-toolbar-divider"></span>
+<button type="button" onmousedown="event.preventDefault()" onclick="openEquationEditor()" title="Insert an equation">∑ Equation</button>
+<button type="button" onmousedown="event.preventDefault()" onclick="document.getElementById('imageUpload').click()" title="Insert an image">▧ Image</button>
+<button type="button" onmousedown="event.preventDefault()" onclick="openVisualTableEditor()" title="Insert a table">▦ Table</button>
+<button type="button" class="visual-toolbar-add-option" onmousedown="event.preventDefault()" onclick="addOption()" title="Add an answer choice">＋ Choice</button>
+<button type="button" class="visual-toolbar-preview" onmousedown="event.preventDefault()" onclick="previewCurrentQuestion()" title="Preview the full exam and navigate between questions">▶ Full exam preview</button>
+<input type="file" id="imageUpload" accept="image/*" multiple onchange="handleImageUpload(event)" hidden>
+</div>
+<div id="visualWritingArea" class="visual-writing-area">
+<div class="visual-field-label">Question</div>
+<div id="questionEditor" class="visual-editable question-editable" contenteditable="true" data-placeholder="Write the question here…" onfocus="setActiveVisualEditor(this)" oninput="handleVisualEditorInput(this)"></div>
+<div id="optionsArea" class="visual-options-area">
+<div class="visual-options-heading"><strong>Answer choices</strong><span>Click a choice to edit it</span></div>
+<div id="optionsContainer" class="visual-options-list"></div>
+<button type="button" class="visual-add-choice" onclick="addOption()">＋ Add answer choice</button>
+</div>
+</div>
+</div>
+<p class="visual-editor-hint">Type <code>\( ... \)</code> anywhere in a question or answer choice to render an inline equation. Use the toolbar to insert a visual equation, image, or table.</p>
+<textarea id="qText" hidden></textarea>
+</div>
+
+<div class="form-group" id="answerGroup">
+<label for="qAnswer">Correct Answer</label>
+<input type="text" id="qAnswer" placeholder="Letter of option (A/B/C…) for SCQ, comma-separated for MCQ, or number for Numerical">
+</div>
+
+<input type="hidden" id="editId" value="">
+<input type="hidden" id="questionImages" value="">
+<input type="hidden" id="questionTables" value="">
+
+<div class="form-footer">
+<button class="btn-primary" onclick="saveQuestion()">💾 Save Question</button>
+<button class="btn-secondary" onclick="cancelEdit()" id="cancelBtn">Cancel</button>
+</div>
+</div>
+
+<hr style="margin:20px 0">
+
+<div id="questionsList">
+<h2 style="margin-bottom:15px;font-size:17px">All Questions</h2>
+<div style="display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap;align-items:center">
+<select id="filterSection" onchange="renderQuestions()" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px">
+<option value="">All Sections</option>
+</select>
+<button class="btn-secondary" onclick="showBulkImport()">📥 Bulk Import</button>
+<button class="btn-secondary" onclick="toggleMathPreview()">🔢 Toggle Math Preview</button>
+</div>
+<div id="questionsContainer"></div>
+</div>
+
+<!-- BULK IMPORT MODAL -->
+<div id="bulkImportArea" style="display:none;margin-top:15px;padding:20px;border:1px solid #e0e0e0;border-radius:10px;background:#fafafa">
+<h3 style="margin-bottom:10px">📥 Bulk Import Questions</h3>
+<p class="bulk-hint">
+Paste a JSON array of questions. Each question needs at least: <code>"question"</code>, <code>"type"</code> (single/multi/numerical), <code>"answer"</code>.
+Optional: <code>"options"</code> (array), <code>"sectionId"</code> (number), <code>"subsection"</code> (string),
+<code>"images"</code> (array of {id, src, alt, width, alignment}), <code>"tables"</code> (array of {id, caption, headers, rows}).
+</p>
+<textarea id="bulkData" class="bulk-textarea" placeholder='[
+  {"question": "What is 2+2? [img:0]", "type": "single", "options": ["3","4","5"], "answer": 1, "sectionId": 1, "subsection": "single", "images": [{"id": 0, "src": "data:image/png;base64,...", "alt": "formula"}], "tables": []}
+]'></textarea>
+<div style="margin-top:10px;display:flex;gap:10px">
+<button class="btn-primary" onclick="bulkImport()">Import Questions</button>
+<button class="btn-secondary" onclick="document.getElementById('bulkImportArea').style.display='none'">Cancel</button>
+</div>
+<div id="bulkResult" style="margin-top:10px;font-size:13px"></div>
+</div>
+
+</div>
+
+<!-- TAB: SECTIONS -->
+<div id="tab-sections" class="tab-content">
+
+<h2 style="margin-bottom:15px;font-size:17px">Manage Sections</h2>
+
+<div style="display:flex;gap:10px;margin-bottom:20px">
+<input type="text" id="newSectionName" placeholder="New section name (e.g. Physics, Chemistry)" style="flex:1;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+<button class="btn-primary" onclick="addSection()">+ Add Section</button>
+</div>
+
+<p style="font-size:12px;color:#888;margin-bottom:10px">Drag sections to reorder. Deleting a section removes questions from that section (sets them to unassigned). You can add, edit label/type, reorder, or remove subsections within each section. Questions reference subsections by ID; if you remove a subsection, related questions become unassigned from that subsection.</p>
+
+<div id="sectionsContainer"></div>
+
+</div>
+
+<!-- TAB: SETTINGS -->
+<div id="tab-settings" class="tab-content">
+
+<h2 style="margin-bottom:15px;font-size:17px">Exam Settings</h2>
+
+<div class="settings-group">
+<h3>⏱ Timer Duration</h3>
+<div class="form-group">
+<label for="timerHours">Hours:</label>
+<input type="number" id="timerHours" min="0" max="23" value="1">
+</div>
+<div class="form-group">
+<label for="timerMinutes">Minutes:</label>
+<input type="number" id="timerMinutes" min="0" max="59" value="30">
+</div>
+<button class="btn-primary" onclick="saveConfig()">💾 Save Timer</button>
+<div id="configStatus" style="margin-top:8px;font-size:13px;color:#2e7d32"></div>
+</div>
+
+<div class="settings-group">
+<h3>📊 Results</h3>
+<button class="btn-secondary" onclick="viewResults()">View Saved Results</button>
+<div id="resultsContainer" style="margin-top:10px;font-size:13px;max-height:300px;overflow:auto"></div>
+</div>
+
+</div>
+
+<!-- TAB: PROCTORING -->
+<div id="tab-proctoring" class="tab-content">
+
+<h2 style="margin-bottom:15px;font-size:17px">Live Proctoring</h2>
+<p class="header-desc" style="margin-bottom:15px">Watch each student's shared screen and live camera, and listen to their microphone.</p>
+
+<div class="proctor-note">
+<strong>🔒 Mandatory proctoring:</strong> students cannot start the test until camera, microphone, and screen sharing are enabled. Students choose a screen, window, or tab in their browser dialog, and the chosen surface is visible to the conductor. Unmute your speakers and press <strong>🔊 Listen</strong> on a card to hear that student.
+</div>
+
+<div class="proctor-toolbar">
+<h3 style="font-size:15px">👥 Monitored Students</h3>
+<div style="display:flex;gap:8px;align-items:center">
+<span id="proctorLastRefresh" style="font-size:12px;color:#888"></span>
+<button class="btn-secondary" onclick="loadProctoring()">🔄 Refresh</button>
+</div>
+</div>
+<div id="proctorGrid" class="proctor-grid">
+<div class="no-data">No students are being monitored yet.</div>
+</div>
+
+<div class="proctor-chat-block">
+<h3 style="font-size:15px;margin-bottom:6px">💬 Help Chat</h3>
+<p class="header-desc" style="margin-bottom:12px">Students ask for help from the chat button on their test screen. Pick a conversation to read and reply.</p>
+
+<div class="chat-admin-wrap">
+<div class="chat-threads" id="chatThreads">
+<div class="chat-thread-empty">No student messages yet.</div>
+</div>
+<div class="chat-conversation">
+<div class="chat-conv-head" id="chatConvHead">Select a conversation</div>
+<div class="chat-messages" id="chatMessages">
+<div class="chat-empty">Select a student from the left to read and reply.</div>
+</div>
+<div class="chat-input-row">
+<input id="chatAdminInput" type="text" maxlength="1000" placeholder="Type a reply..." disabled onkeydown="if(event.key==='Enter'){sendAdminChat();event.preventDefault();}">
+<button class="btn-primary" type="button" onclick="sendAdminChat()">Send</button>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- TAB: PREVIEW -->
+<div id="tab-preview" class="tab-content">
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px"><h2 style="margin:0;font-size:17px">Test Preview</h2><button class="btn-primary" type="button" onclick="previewCurrentQuestion()">▶ Full exam preview</button></div>
+<p class="header-desc" style="margin-bottom:15px">Questions grouped by section and subsection, in the order they'll appear in the test. Images and tables are rendered.</p>
+
+<div id="previewContainer"></div>
+
+</div>
+
+</div>
+
+<div id="focusOverlay">
+<div id="focusPanel">
+<div id="focusHeader">
+<div id="focusTitle">Student</div>
+<div id="focusHeaderActions">
+<button id="focusNormalViewBtn" class="btn-secondary" type="button" onclick="exitExpandedFocusMedia()" hidden>↩ Back to split view</button>
+<button class="btn-info" type="button" onclick="focusReconnect()">🔄 Reconnect</button>
+<button class="btn-secondary" type="button" onclick="closeStudentFocus()">✕ Close</button>
+</div>
+</div>
+<div id="focusBody">
+<div id="focusMedia">
+<div class="focus-video-wrap focus-camera">
+<div class="focus-label">📷 Camera <span id="focusCameraStatus" class="proctor-live-status waiting">● Waiting</span><button class="focus-expand-btn" type="button" onclick="expandFocusMedia('camera')" aria-label="Expand camera view">⛶ Expand</button></div>
+<video id="focusCameraVideo" autoplay playsinline muted></video>
+</div>
+<div class="focus-video-wrap focus-screen">
+<div class="focus-label">🖥️ Screen share <span id="focusScreenStatus" class="proctor-live-status waiting">● Waiting</span><button class="focus-expand-btn" type="button" onclick="expandFocusMedia('screen')" aria-label="Expand screen share view">⛶ Expand</button></div>
+<video id="focusScreenVideo" autoplay playsinline muted></video>
+<div id="focusScreenEmpty" class="proctor-empty">Waiting for the student to share a screen…</div>
+</div>
+<div id="focusAudioRow">
+<span class="proctor-audio-label">🎤 Live audio</span>
+<span id="focusAudioStatus" class="proctor-live-status waiting">● Waiting</span>
+<div id="focusAudioMeter" class="audio-level-meter" role="meter" aria-label="Microphone sound level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="No sound detected">
+<span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+</div>
+<button class="btn-info" type="button" id="focusAudioBtn" onclick="toggleFocusAudio()">🔊 Play audio</button>
+<audio id="focusAudio" autoplay></audio>
+</div>
+</div>
+<div id="focusChat">
+<div id="focusChatHeader">💬 Chat with student</div>
+<div id="focusChatMessages"></div>
+<div id="focusChatInputRow">
+<input id="focusChatInput" type="text" maxlength="1000" placeholder="Type a message..." onkeydown="if(event.key==='Enter'){sendFocusChat();event.preventDefault();}">
+<button class="btn-primary" type="button" onclick="sendFocusChat()">Send</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+/* ========================================= */
+/* CRITICAL FUNCTIONS (inlined for reliability) */
+/* ========================================= */
+function switchTab(name){
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+    const tab = document.querySelector(`.tab[data-tab="${name}"]`);
+    if(tab) tab.classList.add("active");
+    const content = document.getElementById("tab-" + name);
+    if(content) content.classList.add("active");
+    if(name === "sections") loadSections();
+    if(name === "preview") loadPreview();
+    if(name === "settings") loadConfig();
+    if(name === "proctoring") loadProctoring();
+    if(name === "questions") loadQuestions();
+}
+</script>
+<script src="admin.js?v=question-linebreak-preview-3"></script>
+</body>
+</html>
